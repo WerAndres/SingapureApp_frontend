@@ -1,0 +1,66 @@
+<div class="register">
+  <mat-card class="box-register">
+    <div class="icon-box-login">
+      <img src="../../../assets/images/logo.png"/>
+      <div>SingapureApp - Registro</div>
+    </div>
+    <div class="content-box-login" *ngIf="!isLoading">
+      <form name="formRegister" (ngSubmit)="formRegister.form.valid && onSubmit()" #formRegister="ngForm" novalidate>
+        <div>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Nombre" name="nameRegister" [(ngModel)]="UserRegister.name" #nameRegister="ngModel" [ngClass]="{ 'is-invalid': formRegister.submitted && nameRegister.invalid }" required >
+            <mat-error *ngIf="nameRegister.hasError('required')">
+                El nombre es <strong>obligatorio</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input type="email" matInput placeholder="Email" name="emailRegister" [(ngModel)]="UserRegister.email" #emailRegister="ngModel" [ngClass]="{ 'is-invalid': formRegister.submitted && emailRegister.invalid }" required email >
+            <mat-error *ngIf="emailRegister.hasError('email') && !emailRegister.hasError('required')">
+                Por favor ingrese un Email valido
+            </mat-error>
+            <mat-error *ngIf="emailRegister.hasError('required')">
+                Email es <strong>obligatorio</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+              <input type="password" matInput placeholder="Password" name="passwordRegister" [(ngModel)]="UserRegister.password" #passwordRegister="ngModel" [ngClass]="{ 'is-invalid': formRegister.submitted && passwordRegister.invalid }" required minlength="6">
+              <mat-error *ngIf="passwordRegister.hasError('minlength') && !passwordRegister.hasError('required')">
+                      Por favor ingrese un Password valido
+              </mat-error>
+              <mat-error *ngIf=" passwordRegister.hasError('required')">
+                      Password es <strong>obligatorio</strong>
+                  </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input (keyup)="onKey($event)" type="password" matInput placeholder="Confirmar Password" name="confirmPasswordRegister" [(ngModel)]="confirmPassword" #confirmPasswordRegister="ngModel" [ngClass]="{ 'is-invalid': ((formRegister.submitted && confirmPasswordRegister.invalid) || confirmPassErrorEquals)}" required minlength="6">
+            <mat-error *ngIf="confirmPasswordRegister.hasError('minlength') && !confirmPasswordRegister.hasError('required')">
+                Por favor ingrese un Password valido
+            </mat-error>
+            <mat-error *ngIf="confirmPasswordRegister.hasError('required')">
+                Confirmar Password es <strong>obligatorio</strong>
+            </mat-error>
+          </mat-form-field>
+          <span class="matErrorSim" *ngIf="confirmPassErrorEquals">
+            Los campos "Password" y "confirmar password" Son diferentes
+          </span>
+        </div>
+        <div class="divButton inlineblock centrar">
+            <div class="left">
+                <button type="submit" [disabled]="
+                        passwordRegister.hasError('minlength') ||
+                        passwordRegister.hasError('required') ||
+                        emailRegister.hasError('email') ||
+                        emailRegister.hasError('required')"
+                    mat-raised-button color="primary">
+                        Registrarse
+                </button>
+            </div>
+            <div class="left">
+                <button routerLink="/login" mat-raised-button color="accent">Cancelar</button>
+            </div>
+        </div>
+      </form>
+    </div>
+    <app-loading *ngIf="isLoading"></app-loading>
+  </mat-card>
+</div>
