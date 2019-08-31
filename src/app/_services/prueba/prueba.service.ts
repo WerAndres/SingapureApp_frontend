@@ -11,6 +11,6 @@ export class PruebaService {
   public server = environment.apiUrl;
   constructor(private http: HttpClient) {}
   public getPrueba(id: any, content: any): Observable<Prueba> {
-    return this.http.get<Prueba>(this.server + '/prueba/' + id + '/' + content);
+    return this.http.get<Prueba>(this.server + '/secured/api' + '/prueba/' + id + '/' + content);
   }
 }

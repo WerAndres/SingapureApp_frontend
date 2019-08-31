@@ -1,0 +1,22 @@
+<div [ngClass]="(data.type == 'error') ? 'containerSnackBar error' : (data.type == 'ok') ? 'containerSnackBar ok' : (data.type == 'warn') ? 'containerSnackBar warn' : 'containerSnackBar'">
+  <div class="icon">
+      <div class="containIcon">
+        <i [ngClass]="(data.icon != null) ? data.icon : (data.type == 'error') ? 'fas fa-times' : (data.type == 'ok') ? 'fas fa-check' : (data.type == 'warn') ? 'fas fa-exclamation' : 'fas fa-info-circle'"></i>
+      </div>
+  </div>
+  <div class="text">
+    <div *ngIf="data.elements.error == null">
+      <b>Error 999</b><br>
+      {{ data }}
+    </div>
+    <div *ngIf="data.elements.error != null && data.elements.error.trace != null">
+      <b>Error {{ data.elements.error.status }}-999</b><br>
+      {{ data.elements.error.message }} - {{ data.elements.error.trace.length > 50 ? data.elements.error.trace.substr(0, 50) + '...' : data.elements.error.trace  }}
+    </div>
+    <div *ngIf="data.elements.error != null && data.elements.error.trace == null">
+      <b>Error {{ data.elements.error.codeStatus }}-{{ data.elements.error.internalCodeStatus }}</b><br>
+      {{ data.elements.error.error }} - {{ data.elements.error.message }}
+    </div>
+  </div>
+</div>
+

@@ -28,7 +28,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/assets/styles/styles.scss"
             ],
             "scripts": []
           },
@@ -80,7 +80,7 @@
           "options": {
             "browserTarget": "SingapureApp:build",
             "proxyConfig": "proxy.conf.json",
-            "port": 4224
+            "port": 4220
           },
           "configurations": {
             "production": {
