@@ -1,0 +1,43 @@
+.login {
+  background: url('~src/assets/images/fondo1.jpg');
+  height: 100vh;
+}
+.mat-form-field {
+  width: 95%;
+  padding: 2.5%;
+}
+.divButton {
+  display: inline-block;
+  button {
+    margin: 0px 10px;
+  }
+}
+.box-login {
+  background: #FAFAFA;
+  width: 400px;
+  border-radius: 10px;
+  position: relative;
+  text-align: center;
+  font-weight: 600;
+  margin: auto;
+  top: 20%;
+  -webkit-box-shadow: 5px 5px 8px 0px rgba(0,0,0,0.75) !important;
+  -moz-box-shadow: 5px 5px 8px 0px rgba(0,0,0,0.75) !important;
+  box-shadow: 5px 5px 8px 0px rgba(0,0,0,0.75) !important;
+}
+@media screen and (max-width: 700px){
+  .box-login {
+    width: 300px;
+  }
+}
+.icon-box-login img {
+  width: 60px;
+}
+.login-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+.input-login {
+  width: 100%;
+}

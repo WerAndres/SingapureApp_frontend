@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { PruebaService } from 'src/app/_services/prueba.service';
+import { PruebaService } from 'src/app/_services/prueba/prueba.service';
 
 @Component({
   selector: 'app-prueba',
@@ -22,7 +22,7 @@ export class PruebaComponent implements OnInit {
         console.log('resp_ ' + JSON.stringify(resp));
       },
       error => {
-          console.log('error', 'Damn', 'Something went wrong...');
+          console.log('error', 'Damn', 'Something went wrong...', error);
       },
       () => {
         console.log('success', 'Complete', 'Getting all values complete');

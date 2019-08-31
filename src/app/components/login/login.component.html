@@ -1,0 +1,50 @@
+<div id="login"> 
+    <mat-card class="center inlineblock"> 
+        <div class="inlineblock">
+            <div class="inlineblock">
+                <i class="fas fa-car iconTittle"></i>                
+            </div>
+            <mat-card-title>
+                MotorShop Car History
+            </mat-card-title>
+        </div>        
+        <form name="formLogin" (ngSubmit)="formLogin.form.valid && onSubmit()" #formLogin="ngForm" novalidate>
+            <div>                
+                <mat-form-field>
+                    <input type="email" matInput placeholder="Email" name="emailLogin" [(ngModel)]="UserLogin.email" #emailLogin="ngModel" [ngClass]="{ 'is-invalid': formLogin.submitted && emailLogin.invalid }" required email >
+                    <mat-error *ngIf="emailLogin.hasError('email') && !emailLogin.hasError('required')">
+                        Por favor ingrese un Email valido
+                    </mat-error>
+                    <mat-error *ngIf="emailLogin.hasError('required')">
+                        Email es <strong>obligatorio</strong>
+                    </mat-error>                    
+                </mat-form-field>
+                <mat-form-field>                    
+                    <input type="password" matInput placeholder="Password" name="passwordLogin" [(ngModel)]="UserLogin.password" #passwordLogin="ngModel" [ngClass]="{ 'is-invalid': formLogin.submitted && passwordLogin.invalid }" required minlength="6">                    
+                    <mat-error *ngIf="passwordLogin.hasError('minlength') && !passwordLogin.hasError('required')">
+                            Por favor ingrese un Password valido
+                    </mat-error>
+                    <mat-error *ngIf=" passwordLogin.hasError('required')">
+                            Password es <strong>obligatorio</strong>
+                        </mat-error>                        
+                </mat-form-field>                 
+            </div>
+            <div class="divButton inlineblock centrar">
+                <div class="left">
+                    <button type="submit" [disabled]="
+                            passwordLogin.hasError('minlength') || 
+                            passwordLogin.hasError('required') ||
+                            emailLogin.hasError('email') ||
+                            emailLogin.hasError('required')" 
+                        mat-raised-button color="primary">
+                            Acceder
+                    </button>
+                </div>
+                <div class="left">
+                    <button routerLink="/register" mat-raised-button color="accent">Registrarse</button>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+
+</div>
