@@ -5,17 +5,26 @@
       </div>
   </div>
   <div class="text">
-    <div *ngIf="data.elements.error == null">
-      <b>Error 999</b><br>
-      {{ data }}
-    </div>
-    <div *ngIf="data.elements.error != null && data.elements.error.trace != null">
-      <b>Error {{ data.elements.error.status }}-999</b><br>
-      {{ data.elements.error.message }} - {{ data.elements.error.trace.length > 50 ? data.elements.error.trace.substr(0, 50) + '...' : data.elements.error.trace  }}
-    </div>
-    <div *ngIf="data.elements.error != null && data.elements.error.trace == null">
-      <b>Error {{ data.elements.error.codeStatus }}-{{ data.elements.error.internalCodeStatus }}</b><br>
-      {{ data.elements.error.error }} - {{ data.elements.error.message }}
+    <ng-container  <div *ngIf="data.type == 'error'">
+      <div *ngIf="data.elements.error == null">
+        <b>Error 999</b><br>
+        {{ data }}
+      </div>
+      <div *ngIf="data.elements.error != null && data.elements.error.trace != null && data.elements.status != 0">
+        <b>Error {{ data.elements.error.status }}-999</b><br>
+        {{ data.elements.error.message }} - {{ data.elements.error.trace.length > 50 ? data.elements.error.trace.substr(0, 50) + '...' : data.elements.error.trace  }}
+      </div>
+      <div *ngIf="data.elements.error != null && data.elements.error.trace == null && data.elements.status != 0">
+        <b>Error {{ data.elements.error.codeStatus }} - {{ data.elements.error.internalCodeStatus }}</b><br>
+        {{ data.elements.error.message }}
+      </div>
+      <div *ngIf="data.elements.status == 0">
+        <b>Error 999:</b><br>Servidor Backend no disponible
+      </div>
+    </ng-container>
+    <div *ngIf="data.type != 'error'">
+      <b>{{data.elements.title}}</b><br>
+      {{data.elements.message}}
     </div>
   </div>
 </div>

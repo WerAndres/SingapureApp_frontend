@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth/auth.service';
-import { User } from 'src/app/_models/User';
+import { Usuarios } from 'src/app/_models/Usuarios';
 import { Md5 } from 'md5-typescript';
 import { SnackBarComponent } from '../../util/snack-bar-component/snack-bar.component';
 import { MatSnackBar } from '@angular/material';
@@ -17,9 +17,9 @@ export class LoginComponent implements OnInit {
 
   id: any;
   content: any;
-  UserLogin: User = new User();
+  UserLogin: Usuarios = new Usuarios();
   error: any;
-  UserLoginSend: User = new User();
+  UserLoginSend: Usuarios = new Usuarios();
   isLoading = false;
   snack: SnackModel = new SnackModel();
 
