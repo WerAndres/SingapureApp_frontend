@@ -18,14 +18,18 @@ import {
   MatGridListModule,
   MatSnackBarModule,
   MatFormFieldModule,
-  MAT_SNACK_BAR_DEFAULT_OPTIONS
+  MatSelectModule,
+  MatOptionModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSelect
 } from '@angular/material';
 import { SnackBarComponent } from './_components/util/snack-bar-component/snack-bar.component';
 import { RegisterComponent } from './_components/pages/register/register.component';
 import { LoadingComponent } from './_components/util/loading/loading.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptoService } from './_services/middleware/AuthInterceptor.service';
+import { AuthInterceptorService } from './_services/middleware/AuthInterceptor.service';
 import { AuthGuardService } from './_services/middleware/AuthGuard.service';
+import { Meta } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -51,6 +55,8 @@ import { AuthGuardService } from './_services/middleware/AuthGuard.service';
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    MatSelectModule,
+    MatOptionModule,
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -67,8 +73,12 @@ import { AuthGuardService } from './_services/middleware/AuthGuard.service';
   providers: [
     AuthGuardService,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 4000 } },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptoService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private meta: Meta) {
+    this.meta.addTag({ name: 'theme-color', content: '#F00' });
+  }
+ }

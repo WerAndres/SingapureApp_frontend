@@ -8,13 +8,20 @@
       <form name="formRegister" (ngSubmit)="formRegister.form.valid && onSubmit()" #formRegister="ngForm" novalidate>
         <div>
           <mat-form-field>
-            <input type="text" matInput placeholder="Nombre" name="nameRegister" [(ngModel)]="UserRegister.name" #nameRegister="ngModel" [ngClass]="{ 'is-invalid': formRegister.submitted && nameRegister.invalid }" required >
+            <input type="text" matInput placeholder="Nombre" name="nameRegister" [(ngModel)]="userRegister.nombre" #nameRegister="ngModel" [ngClass]="{ 'is-invalid': formRegister.submitted && nameRegister.invalid }" required >
             <mat-error *ngIf="nameRegister.hasError('required')">
                 El nombre es <strong>obligatorio</strong>
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input type="email" matInput placeholder="Email" name="emailRegister" [(ngModel)]="UserRegister.email" #emailRegister="ngModel" [ngClass]="{ 'is-invalid': formRegister.submitted && emailRegister.invalid }" required email >
+            <mat-select placeholder="Tipo de usuario" name="tipoUsuarioRegister" [(ngModel)]="tipoUsuario" required>
+              <mat-option *ngFor="let tipoUsu of tiposUsuariosSelect" [value]="tipoUsu">
+                {{tipoUsu.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input type="email" matInput placeholder="Email" name="emailRegister" [(ngModel)]="userRegister.email" #emailRegister="ngModel" [ngClass]="{ 'is-invalid': formRegister.submitted && emailRegister.invalid }" required email >
             <mat-error *ngIf="emailRegister.hasError('email') && !emailRegister.hasError('required')">
                 Por favor ingrese un Email valido
             </mat-error>
@@ -23,7 +30,7 @@
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-              <input type="password" matInput placeholder="Password" name="passwordRegister" [(ngModel)]="UserRegister.password" #passwordRegister="ngModel" [ngClass]="{ 'is-invalid': formRegister.submitted && passwordRegister.invalid }" required minlength="6">
+              <input type="password" matInput placeholder="Password" name="passwordRegister" [(ngModel)]="userRegister.password" #passwordRegister="ngModel" [ngClass]="{ 'is-invalid': formRegister.submitted && passwordRegister.invalid }" required minlength="6">
               <mat-error *ngIf="passwordRegister.hasError('minlength') && !passwordRegister.hasError('required')">
                       Por favor ingrese un Password valido
               </mat-error>
