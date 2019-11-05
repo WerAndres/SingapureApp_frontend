@@ -1,13 +1,17 @@
+import { ProfileComponent } from './_components/pages/profile/profile.component';
+import { ResourcesComponent } from './_components/pages/resources/resources.component';
+import { ActivitiesComponent } from './_components/pages/activities/activities.component';
+import { ForumComponent } from './_components/pages/forum/forum.component';
+import { DashboardComponent } from './_components/pages/dashboard/dashboard.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PruebaComponent } from './_components/prueba/prueba.component';
 import { LoginComponent } from './_components/pages/login/login.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PrincipalComponent } from './_components/pages/principal/principal.component';
 import { FormsModule } from '@angular/forms';
 import {
   MatToolbarModule,
@@ -20,8 +24,9 @@ import {
   MatFormFieldModule,
   MatSelectModule,
   MatOptionModule,
+  MatSidenavModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
-  MatSelect
+  MatButtonToggleModule
 } from '@angular/material';
 import { SnackBarComponent } from './_components/util/snack-bar-component/snack-bar.component';
 import { RegisterComponent } from './_components/pages/register/register.component';
@@ -37,9 +42,13 @@ import { Meta } from '@angular/platform-browser';
     LoginComponent,
     RegisterComponent,
     PruebaComponent,
-    PrincipalComponent,
     SnackBarComponent,
-    LoadingComponent
+    LoadingComponent,
+    DashboardComponent,
+    ForumComponent,
+    ActivitiesComponent,
+    ResourcesComponent,
+    ProfileComponent
   ],
   entryComponents: [
     SnackBarComponent
@@ -57,9 +66,12 @@ import { Meta } from '@angular/platform-browser';
     MatSnackBarModule,
     MatSelectModule,
     MatOptionModule,
+    MatSidenavModule,
+    MatButtonToggleModule,
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NgbModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {

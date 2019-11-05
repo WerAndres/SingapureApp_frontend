@@ -30,15 +30,16 @@ export class LoginComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.authService.logout();
   }
   onSubmit() {
     this.isLoading = true;
     this.UserLoginSend.email = this.UserLogin.email;
     this.UserLoginSend.password = Md5.init(this.UserLogin.password);
-    const respuesta = this.authService.login(this.UserLoginSend).subscribe(
+    this.authService.login(this.UserLoginSend).subscribe(
       resp => {
         this.isLoading = false;
-        this.router.navigate(['/principal']);
+        this.router.navigate(['/dashboard']);
       },
       error => {
         this.isLoading = false;

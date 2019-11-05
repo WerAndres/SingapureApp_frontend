@@ -1,0 +1,95 @@
+.app-container {
+  height: 100vh;
+}
+.circle{
+  border-radius: 50%;
+  width: 150px;
+}
+.menuBar {
+  background: #F00;
+  -webkit-box-shadow: 10px 0px 15px 0px rgba(212, 212, 212, 0.5);
+    -moz-box-shadow: 10px 0px 15px 0px rgba(212, 212, 212, 0.5);
+    box-shadow: 10px 0px 15px 0px rgba(212, 212, 212, 0.5);
+}
+.menuBarOp {
+  background: #33333344;
+  background: url('../assets/images/menuBar.jpg');
+  background-size: 600px;
+  background-position: bottom;
+}
+.menuBarBottom{
+  background: #33333344;
+}
+.namePerson{
+  text-align: center;
+  background: #021240bd;
+  color: #FAFAFA;
+  padding: 3px 10px;
+}
+.munuItem.active {
+  background: #0f0567;
+  cursor: default;
+}
+.munuItem {
+  cursor: pointer;
+  color: #FAFAFA;
+  background: #3c39521a;
+  margin: 15px 0px;
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 7px;
+  i {
+    float: left;
+    margin-right: 10px;
+    font-size: 15px;
+  }
+  .munuItemText {
+    margin-top: 1px;
+  }
+}
+.munuItem:hover {
+  background: #312e4a6b;
+}
+.menuTop {
+  width: 100%;
+  background: #30039e;
+  color: #FAFAFA;
+  padding: 5px 5px;
+  height: 50px;
+}
+.containIcon {
+  width: 100px;
+  padding: 5px;
+  display: inline-block;
+  margin-left: 20px;
+  height: 20px;
+  margin-top: 5px;
+  i {
+    float: left;
+    margin-right: 12px;
+    margin-top: 5px;
+  }
+}
+.containIcon:hover{
+  cursor: pointer;
+  color: #EDEDED;
+  font-size: 18px;
+}
+.containerPrin{
+  padding: 5px;
+  width: 100%;
+}
+.iconMenuTop {
+  float: right;
+  cursor: pointer;
+  img {
+    width: 30px;
+    margin-right: 10px;
+  }
+  div {
+    font-size: 17px;
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+}

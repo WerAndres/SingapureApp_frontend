@@ -1,0 +1,21 @@
+<div class="containerProfile row">
+  <div class="profilePhoto col-md-6">
+    <div class="profileImg">
+        <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circle" alt="Avatar">
+        <img *ngIf="imageEnc !== ''" [src]="imageEnc" class="circle" alt="Avatar">
+    </div>
+    <div class="profileButtons">
+      botones foto
+    </div>
+  </div>
+  <div class="profileInfo col-md-6">
+    <div class="itemProfileInfo">
+        <div class="textProfileInfo col-md-4">
+          texto info
+        </div>
+        <div class="buttonsProfileInfo">
+          accion
+        </div>
+    </div>
+  </div>
+</div>
