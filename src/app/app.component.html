@@ -1,2 +1,40 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-<router-outlet></router-outlet>
+<mat-drawer-container class="app-container">
+  <mat-drawer class="menuBar" #drawer mode="push">
+      <mat-card class="menuBarOp" >
+        <div align="center">
+          <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circle" alt="Avatar">
+          <img *ngIf="imageEnc !== ''" [src]="imageEnc" class="circle" alt="Avatar">
+        </div>
+        <div class="namePerson">
+          {{name}}
+        </div>
+        <div class="namePerson">
+          {{rolPerson}}
+        </div>
+      </mat-card>
+      <mat-card class="menuBarBottom">
+        <div class="menuList" *ngFor="let menuItem of menuItems">
+            <div [class]="menuItem.active ? 'munuItem active' : 'munuItem'" (click)="activeBar(menuItem)" >
+                <i class="menuItem.icon"></i>
+                <div class="munuItemText">{{menuItem.name}}</div>
+            </div>
+        </div>
+      </mat-card>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="menuTop" *ngIf="menuBar">
+      <div id='toogleMenu' class="containIcon" (click)="drawer.toggle()">
+        <i [ngClass]="'fas fa-bars'"></i>
+        <div>Menu</div>
+      </div>
+      <div class="iconMenuTop" (click)="routeDashBoard()">
+        <div>SingapureApp</div>
+        <img src="../../../assets/images/logo.png"/>
+      </div>
+    </div>
+    <div [class]="menuBar ? 'containerPrin' : ''">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
