@@ -1,3 +1,8 @@
+import { SnackBarComponent } from './../../util/snack-bar-component/snack-bar.component';
+import { MatSnackBar } from '@angular/material';
+import { SnackModel } from './../../../_models/SnackModel';
+import { UsuariosService } from './../../../_services/utils/usuarios.service';
+import { Usuarios } from './../../../_models/Usuarios';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,14 +12,51 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
   imageEnc: any;
+  imageEncOld: any;
   ram: any;
+  actPhoto: any = false;
+  usuarioSend: Usuarios = new Usuarios();
+  isLoading: any = false;
+  snack: SnackModel = new SnackModel();
+
+  constructor(
+    private usuariosService: UsuariosService,
+    public snackBar: MatSnackBar
+  ) {}
+
   ngOnInit() {
     this.ram = this.getRandomArbitrary(1, 9);
+    this.usuarioSend.email = JSON.parse(localStorage.getItem('user')) !== null ? JSON.parse(localStorage.getItem('user')).email : null;
     this.imageEnc = JSON.parse(localStorage.getItem('user')) !== null ?
     (JSON.parse(localStorage.getItem('user')).photo !== null ? JSON.parse(localStorage.getItem('user')).photo : '') : '';
+    this.imageEncOld = this.imageEnc;
   }
   getRandomArbitrary(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
+  }
+  actUser() {
+    console.log("acutlizando");
+    this.usuarioSend.photo = this.imageEnc;
+    this.usuariosService.updateUser(this.usuarioSend).subscribe(
+      resp => {
+        this.imageEncOld = this.imageEnc;
+        console.log("Resp: " + JSON.stringify(resp))
+        this.isLoading = false;
+        this.snack.elements = {};
+        this.snack.elements.title = 'Registro';
+        this.snack.elements.message = 'Usuario actualizado';
+        this.snack.type = 'ok';
+        this.snack.icon = null;
+        this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+      },
+      error => {
+        this.imageEnc = this.imageEncOld;
+        this.isLoading = false;
+        this.snack.elements = error;
+        this.snack.type = 'error';
+        this.snack.icon = null;
+        this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+      });
   }
 
 }

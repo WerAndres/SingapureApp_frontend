@@ -1,14 +1,27 @@
 <div class="containerProfile row">
-  <div class="profilePhoto col-md-6">
-    <div class="profileImg">
+  <div class="profilePhoto col-md-4" *ngIf="!isLoading">
+    <div [class]="actPhoto ? 'profileImg centrar greyUpdate' : 'centrar profileImg'">
         <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circle" alt="Avatar">
         <img *ngIf="imageEnc !== ''" [src]="imageEnc" class="circle" alt="Avatar">
     </div>
-    <div class="profileButtons">
-      botones foto
+    <div class="profileButtons centrar">
+      <button *ngIf="!actPhoto" (click)="actPhoto = true"
+        mat-raised-button color="primary">
+        <i class="fas fa-upload"></i> Actualizar
+      </button>
+      <div class="containerProfileButtons" *ngIf="actPhoto">
+        <button  (click)="actPhoto = false; actUser()"
+          mat-raised-button color="primary">
+          <i class="fas fa-check"></i> Aceptar
+        </button>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="URL" [(ngModel)]="imageEnc">
+        </mat-form-field>
+      </div>
     </div>
   </div>
-  <div class="profileInfo col-md-6">
+  <app-loading *ngIf="isLoading"></app-loading>
+  <div class="profileInfo col-md-8">
     <div class="itemProfileInfo">
         <div class="textProfileInfo col-md-4">
           texto info

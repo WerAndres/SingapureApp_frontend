@@ -8,5 +8,6 @@ export class Usuarios {
   nombre: any;
   email: any;
   password: any;
+  photo: any;
   token: any;
 }
