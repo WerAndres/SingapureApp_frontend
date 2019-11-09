@@ -90,8 +90,8 @@
             "ivanp": {
               "browserTarget": "SingapureApp:build:ivanp"
             },
-            "carlosp": {
-              "browserTarget": "SingapureApp:build:carlosp"
+            "carlosr": {
+              "browserTarget": "SingapureApp:build:carlosr"
             }
           }
         },
