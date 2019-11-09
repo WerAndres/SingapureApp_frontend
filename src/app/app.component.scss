@@ -1,29 +1,45 @@
+@import '~@angular/material/theming';
+
+@import '../assets/styles/theme.scss';
+
 .app-container {
   height: 100vh;
 }
 .menuBar {
-  background: #F00;
+  background: mat-color($my-theme-accent);
   -webkit-box-shadow: 10px 0px 15px 0px rgba(212, 212, 212, 0.5);
-    -moz-box-shadow: 10px 0px 15px 0px rgba(212, 212, 212, 0.5);
-    box-shadow: 10px 0px 15px 0px rgba(212, 212, 212, 0.5);
+  -moz-box-shadow: 10px 0px 15px 0px rgba(212, 212, 212, 0.5);
+  box-shadow: 10px 0px 15px 0px rgba(212, 212, 212, 0.5);
+
 }
 .menuBarOp {
   background: #33333344;
   background: url('../assets/images/menuBar.jpg');
   background-size: 600px;
   background-position: bottom;
+  width: 200px;
 }
 .menuBarBottom{
   background: #33333344;
 }
 .namePerson{
   text-align: center;
-  background: #021240bd;
+  background: mat-color($my-theme-primary);
+  opacity: 0.9;
   color: #FAFAFA;
   padding: 3px 10px;
+  margin-top: 10px;
+}
+.rolPerson{
+  text-align: center;
+  background: mat-color($my-theme-primary);
+  opacity: 0.9;
+  color: #FAFAFA;
+  padding: 0px 10px 6px 10px;
+  font-size: 12px;
 }
 .munuItem.active {
-  background: #0f0567;
+  background: mat-color($my-theme-primary);
   cursor: default;
 }
 .munuItem {
@@ -48,7 +64,7 @@
 }
 .menuTop {
   width: 100%;
-  background: #30039e;
+  background: mat-color($my-theme-primary);
   color: #FAFAFA;
   padding: 5px 5px;
   height: 50px;
@@ -87,5 +103,26 @@
     float: left;
     margin-top: 10px;
     margin-right: 10px;
+  }
+}
+.iconBarMenuTop {
+  width: 100%;
+  display: inline-block;
+  background:mat-color($my-theme-primary);
+  .iconBarMenuTop_container{
+    display: inline-block;
+    padding: 5px 5px 0px 5px;
+    img {
+      width: 30px;
+      margin-right: 10px;
+      float: left;
+    }
+    div {
+      font-size: 17px;
+      float: left;
+      margin-top: 10px;
+      margin-right: 10px;
+      color: #FAFAFA;
+    }
   }
 }

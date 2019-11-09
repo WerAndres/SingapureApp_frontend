@@ -1,8 +1,11 @@
+@import '~@angular/material/theming';
+@import '../../../../assets/styles/theme.scss';
+
 .containerProfile.row {
   padding: 30px 50px;
 }
 .profileImg {
-  border: 5px solid #123;
+  border: 5px solid mat-color($my-theme-primary);
   border-radius: 50%;
   width: 160px;
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
@@ -15,8 +18,9 @@
 .profileButtons{
   padding: 20px;
   .containerProfileButtons{
-    .mat-form-field{
+    .urlNewPhoto{
       margin: 10px 0px;
+      width: 100%;
     }
   }
 }

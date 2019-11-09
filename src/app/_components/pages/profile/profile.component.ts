@@ -18,7 +18,8 @@ export class ProfileComponent implements OnInit {
   usuarioSend: Usuarios = new Usuarios();
   isLoading: any = false;
   snack: SnackModel = new SnackModel();
-
+  heigthImg: any;
+  widthImg: any;
   constructor(
     private usuariosService: UsuariosService,
     public snackBar: MatSnackBar
@@ -35,12 +36,15 @@ export class ProfileComponent implements OnInit {
     return Math.floor(Math.random() * (max - min)) + min;
   }
   actUser() {
-    console.log("acutlizando");
+    console.log('actualizando');
     this.usuarioSend.photo = this.imageEnc;
     this.usuariosService.updateUser(this.usuarioSend).subscribe(
       resp => {
         this.imageEncOld = this.imageEnc;
-        console.log("Resp: " + JSON.stringify(resp))
+        console.log('Resp: ' + JSON.stringify(resp));
+        const userLocal = JSON.parse(localStorage.getItem('user'));
+        userLocal.photo = this.imageEnc;
+        localStorage.setItem('user', JSON.stringify(userLocal));
         this.isLoading = false;
         this.snack.elements = {};
         this.snack.elements.title = 'Registro';
@@ -57,6 +61,15 @@ export class ProfileComponent implements OnInit {
         this.snack.icon = null;
         this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
       });
+  }
+  onImageLoad(event) {
+    const loadedImage = event.currentTarget;
+    // tslint:disable-next-line:no-string-literal
+    const width = loadedImage['width'];
+    // tslint:disable-next-line:no-string-literal
+    const height = loadedImage['height'];
+    this.heigthImg = height;
+    this.widthImg = width;
   }
 
 }
