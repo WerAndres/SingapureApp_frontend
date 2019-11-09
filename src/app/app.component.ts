@@ -4,19 +4,23 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import { ISize } from 'selenium-webdriver';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'SingapureApp';
   menuBar: any;
   ram: any = 1;
   name: any = 'usuario';
   imageEnc: any;
   rolPerson: any = 'rol';
+  heigthImg: any;
+  widthImg: any;
   menuItems: any = [
     {name: 'Dashboard', active: false, icon: 'fas fa-th', route: '/dashboard'},
     {name: 'Profile', active: false, icon: 'fas fa-user', route: '/profile'},
@@ -24,16 +28,16 @@ export class AppComponent implements OnInit{
     {name: 'Activities', active: false, icon: 'fas fa-tablet-alt', route: '/activities'},
     {name: 'Resources', active: false, icon: 'fas fa-bolt', route: '/resources'},
     {name: 'Logout', active: false, icon: 'fas fa-sign-out-alt', route: '/login'},
-  ]
-  constructor(private router:Router, private route:ActivatedRoute) {
+  ];
+  constructor(private router: Router, private route: ActivatedRoute) {
     router.events.subscribe((val) => {
       this.init();
   });
     router.events
       .filter(e => e instanceof NavigationEnd)
       .forEach(e => {
-        this.menuBar = route.root.firstChild.snapshot.data['menuBar'];
-    })
+        this.menuBar = route.root.firstChild.snapshot.data.menuBar;
+    });
   }
   ngOnInit() {
     this.init();
@@ -46,6 +50,7 @@ export class AppComponent implements OnInit{
     JSON.parse(localStorage.getItem('user')).tipoUsuario.nombre : 'rol';
     this.imageEnc = JSON.parse(localStorage.getItem('user')) !== null ?
     (JSON.parse(localStorage.getItem('user')).photo !== null ? JSON.parse(localStorage.getItem('user')).photo : '') : '';
+    // tslint:disable-next-line:only-arrow-functions
   }
   activeChangedUrl() {
     const arrayPath = window.location.href.split('/');
@@ -53,20 +58,20 @@ export class AppComponent implements OnInit{
   }
   activeBar(item: any) {
     this.inactiveMenu();
-    item.active = true
+    item.active = true;
     this.router.navigate([item.route]);
     const element: HTMLElement = document.getElementsByClassName('mat-drawer-backdrop')[0] as HTMLElement;
     element.click();
   }
   inactiveMenu() {
     this.menuItems.forEach(element => {
-      element.active = false
+      element.active = false;
     });
   }
-  setActive(valueSearch:any){
+  setActive(valueSearch: any) {
     this.inactiveMenu();
     this.menuItems.forEach(element => {
-      if(element.name.toLowerCase().includes(valueSearch.toLowerCase())){
+      if (element.name.toLowerCase().includes(valueSearch.toLowerCase())) {
         element.active = true;
       }
     });
@@ -76,6 +81,15 @@ export class AppComponent implements OnInit{
   }
   getRandomArbitrary(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
+  }
+  onImageLoad(event) {
+    const loadedImage = event.currentTarget;
+    // tslint:disable-next-line:no-string-literal
+    const width = loadedImage['width'];
+    // tslint:disable-next-line:no-string-literal
+    const height = loadedImage['height'];
+    this.heigthImg = height;
+    this.widthImg = width;
   }
 }
 

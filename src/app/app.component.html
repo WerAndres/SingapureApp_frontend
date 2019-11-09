@@ -2,14 +2,21 @@
 <mat-drawer-container class="app-container">
   <mat-drawer class="menuBar" #drawer mode="push">
       <mat-card class="menuBarOp" >
-        <div align="center">
-          <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circle" alt="Avatar">
-          <img *ngIf="imageEnc !== ''" [src]="imageEnc" class="circle" alt="Avatar">
+        <div class="iconBarMenuTop centrar" (click)="routeDashBoard()">
+          <div class="iconBarMenuTop_container">
+            <div>SingapureApp</div>
+            <img src="../../../assets/images/logo.png"/>
+          </div>
+        </div>
+        <div align="center" style="margin-top: 10px">
+            <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circle" alt="Avatar">
+            <div id="imageProfile" *ngIf="imageEnc !== ''" [ngStyle]="{'background': 'url(' + imageEnc + ')', 'background-size': heigthImg > widthImg ? '100% auto' : 'auto 100%'}" class="circle"></div>
+            <img *ngIf="imageEnc !== ''" style="display: none" [src]="this.imageEnc" (load)="onImageLoad($event)" />
         </div>
         <div class="namePerson">
           {{name}}
         </div>
-        <div class="namePerson">
+        <div class="rolPerson">
           {{rolPerson}}
         </div>
       </mat-card>

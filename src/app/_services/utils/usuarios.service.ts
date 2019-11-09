@@ -13,6 +13,6 @@ export class UsuariosService {
   constructor(private http: HttpClient) {}
 
   public updateUser(usuario: Usuarios): Observable<GenericResponse> {
-    return this.http.put<GenericResponse>(this.server + '/v1/usuarios', usuario);
+    return this.http.post<GenericResponse>(this.server + '/v1/usuarios', usuario);
   }
 }

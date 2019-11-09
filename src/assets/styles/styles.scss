@@ -53,4 +53,22 @@ app-snack-bar {
 .circle{
   border-radius: 50%;
   width: 150px;
+  vertical-align: middle;
+  height: 150px;
+  background-position: 50% 50% !important;
+}
+.menuBar .mat-drawer-inner-container {
+  background: mat-color($my-theme-accent);
+}
+.menuBarOp.mat-card{
+  padding: 0px !important;
+}
+.boxInfo {
+  background: #EFEFEF;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.3);
+  border-radius: 8px;
+  padding: 0px;
+  margin: 5px;
 }

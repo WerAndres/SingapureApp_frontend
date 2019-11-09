@@ -2,7 +2,8 @@
   <div class="profilePhoto col-md-4" *ngIf="!isLoading">
     <div [class]="actPhoto ? 'profileImg centrar greyUpdate' : 'centrar profileImg'">
         <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circle" alt="Avatar">
-        <img *ngIf="imageEnc !== ''" [src]="imageEnc" class="circle" alt="Avatar">
+        <div id="imageProfile" *ngIf="imageEnc !== ''" [ngStyle]="{'background': 'url(' + imageEnc + ')', 'background-size': heigthImg > widthImg ? '100% auto' : 'auto 100%'}" class="circle"></div>
+        <img *ngIf="imageEnc !== ''" style="display: none" [src]="this.imageEnc" (load)="onImageLoad($event)" />
     </div>
     <div class="profileButtons centrar">
       <button *ngIf="!actPhoto" (click)="actPhoto = true"
@@ -10,11 +11,15 @@
         <i class="fas fa-upload"></i> Actualizar
       </button>
       <div class="containerProfileButtons" *ngIf="actPhoto">
-        <button  (click)="actPhoto = false; actUser()"
+          <button  (click)="actPhoto = false; actUser()" style="margin-top: 5px;"
           mat-raised-button color="primary">
           <i class="fas fa-check"></i> Aceptar
         </button>
-        <mat-form-field class="example-full-width">
+        <button  (click)="actPhoto = false" style="margin-left: 5px; margin-top: 5px;"
+          mat-raised-button color="accent">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+        <mat-form-field class="urlNewPhoto">
           <input matInput placeholder="URL" [(ngModel)]="imageEnc">
         </mat-form-field>
       </div>
@@ -22,12 +27,14 @@
   </div>
   <app-loading *ngIf="isLoading"></app-loading>
   <div class="profileInfo col-md-8">
-    <div class="itemProfileInfo">
-        <div class="textProfileInfo col-md-4">
-          texto info
-        </div>
-        <div class="buttonsProfileInfo">
-          accion
+      <div class="profileInfoContainer boxInfo">
+        <div class="itemProfileInfo">
+          <div class="textProfileInfo col-md-4">
+            texto info
+          </div>
+          <div class="buttonsProfileInfo">
+            accion
+          </div>
         </div>
     </div>
   </div>

@@ -81,7 +81,7 @@
           "options": {
             "browserTarget": "SingapureApp:build",
             "proxyConfig": "proxy.conf.json",
-            "port": 4220
+            "port": 4224
           },
           "configurations": {
             "production": {
