@@ -15,30 +15,39 @@ export class ProfileComponent implements OnInit {
   imageEncOld: any;
   ram: any;
   actPhoto: any = false;
+  usuarioSendImage: Usuarios = new Usuarios();
   usuarioSend: Usuarios = new Usuarios();
   isLoading: any = false;
   snack: SnackModel = new SnackModel();
   heigthImg: any;
   widthImg: any;
+  jsonProfile: any = [];
+  userLE: Usuarios;
   constructor(
     private usuariosService: UsuariosService,
     public snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
+    this.userLE = JSON.parse(localStorage.getItem('user'));
     this.ram = this.getRandomArbitrary(1, 9);
-    this.usuarioSend.email = JSON.parse(localStorage.getItem('user')) !== null ? JSON.parse(localStorage.getItem('user')).email : null;
-    this.imageEnc = JSON.parse(localStorage.getItem('user')) !== null ?
-    (JSON.parse(localStorage.getItem('user')).photo !== null ? JSON.parse(localStorage.getItem('user')).photo : '') : '';
+    this.usuarioSendImage.email = this.userLE !== null ? this.userLE.email : null;
+    this.imageEnc = this.userLE !== null ? (this.userLE.photo !== null ?this.userLE.photo : '') : '';
+    this.usuarioSend.nombre = this.userLE !== null ? this.userLE.nombre : 'Usuario';
+    this.usuarioSend.email = this.userLE !== null ? this.userLE.email : 'email';
     this.imageEncOld = this.imageEnc;
+    this.jsonProfile = [
+      { value: this.usuarioSend.nombre , activeEdit: false},
+      { value: this.usuarioSend.email , activeEdit: false}
+    ];
   }
   getRandomArbitrary(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
   actUser() {
     console.log('actualizando');
-    this.usuarioSend.photo = this.imageEnc;
-    this.usuariosService.updateUser(this.usuarioSend).subscribe(
+    this.usuarioSendImage.photo = this.imageEnc;
+    this.usuariosService.updateUser(this.usuarioSendImage).subscribe(
       resp => {
         this.imageEncOld = this.imageEnc;
         console.log('Resp: ' + JSON.stringify(resp));
@@ -70,6 +79,15 @@ export class ProfileComponent implements OnInit {
     const height = loadedImage['height'];
     this.heigthImg = height;
     this.widthImg = width;
+  }
+  clickActivated(elem) {
+    this.jsonProfile.forEach(element => {
+      element.activeEdit = false;
+    });
+    elem.activeEdit = true;
+  }
+  cancelActivated(elem) {
+    elem.activeEdit = false;
   }
 
 }

@@ -7,6 +7,7 @@ export class Usuarios {
   fechaActualizacion: any;
   nombre: any;
   email: any;
+  keyEmail: any;
   password: any;
   photo: any;
   token: any;

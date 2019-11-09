@@ -72,3 +72,38 @@ app-snack-bar {
   padding: 0px;
   margin: 5px;
 }
+.titlePage{
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
+  margin: 10px;
+}
+.buttonTextAwesome:hover {
+  cursor: pointer;
+}
+.buttonTextAwesome.primary:hover {
+  color: mat-color($my-theme-primary);
+}
+.buttonTextAwesome.accent:hover {
+  color: mat-color($my-theme-accent);
+}
+.containerPage {
+  padding: 30px 100px;
+}
+.inputProfileInfo.mat-form-field {
+  float: left;
+  width: 70%;
+}
+
+@media (max-width: 800px){
+  .containerPage {
+    padding: 30px 50px;
+  }
+}
+
+@media (max-width: 450px){
+  .containerPage {
+    padding: 30px 10px;
+  }
+}

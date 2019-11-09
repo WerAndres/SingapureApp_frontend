@@ -1,4 +1,5 @@
-<div class="containerProfile row">
+<div class="containerPage row">
+  <div class="titlePage">Perfil de usuario</div>
   <div class="profilePhoto col-md-4" *ngIf="!isLoading">
     <div [class]="actPhoto ? 'profileImg centrar greyUpdate' : 'centrar profileImg'">
         <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circle" alt="Avatar">
@@ -8,12 +9,12 @@
     <div class="profileButtons centrar">
       <button *ngIf="!actPhoto" (click)="actPhoto = true"
         mat-raised-button color="primary">
-        <i class="fas fa-upload"></i> Actualizar
+        <i class="fas fa-edit"></i> Editar
       </button>
       <div class="containerProfileButtons" *ngIf="actPhoto">
           <button  (click)="actPhoto = false; actUser()" style="margin-top: 5px;"
           mat-raised-button color="primary">
-          <i class="fas fa-check"></i> Aceptar
+          <i class="fas fa-save"></i> Guardar
         </button>
         <button  (click)="actPhoto = false" style="margin-left: 5px; margin-top: 5px;"
           mat-raised-button color="accent">
@@ -28,14 +29,34 @@
   <app-loading *ngIf="isLoading"></app-loading>
   <div class="profileInfo col-md-8">
       <div class="profileInfoContainer boxInfo">
-        <div class="itemProfileInfo">
-          <div class="textProfileInfo col-md-4">
-            texto info
+          <div class="itemProfileContainer">
+            <div class="itemProfileTitle">
+              Perfil {{usuarioSend.nombre}}
+            </div>
+            <div class="itemProfileSeparator"></div>
+            <div class="itemContainer" *ngFor="let itemProfile of jsonProfile">
+              <div class="itemProfileInfo">
+                <div *ngIf="!itemProfile.activeEdit" class="textProfileInfo">
+                    {{itemProfile.value}}
+                </div>
+                <mat-form-field *ngIf="itemProfile.activeEdit" class="inputProfileInfo">
+                  <input matInput placeholder="{{itemProfile.nameInput}}nuevo" >
+                </mat-form-field>
+                <button  (click)="clickActivated(itemProfile)" style="margin-left: 5px; margin-top: 5px;"
+                  mat-raised-button color="accent">
+                  <i class="fas fa-edit"></i> Editar
+              </button>
+                <div style="margin-top: 15px">
+                  <div class="buttonsProfileInfo buttonTextAwesome primary" *ngIf="itemProfile.activeEdit" (click)="cancelActivated(itemProfile)">
+                    Guardar <i class="fas fa-window-close"></i>
+                  </div>
+                  <div class="buttonsProfileInfo buttonTextAwesome accent" *ngIf="itemProfile.activeEdit" (click)="cancelActivated(itemProfile)">
+                    Cancelar <i class="fas fa-window-close"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="buttonsProfileInfo">
-            accion
-          </div>
-        </div>
     </div>
   </div>
 </div>

@@ -1,9 +1,6 @@
 @import '~@angular/material/theming';
 @import '../../../../assets/styles/theme.scss';
 
-.containerProfile.row {
-  padding: 30px 50px;
-}
 .profileImg {
   border: 5px solid mat-color($my-theme-primary);
   border-radius: 50%;
@@ -24,3 +21,33 @@
     }
   }
 }
+.itemProfileTitle {
+  font-weight: 600;
+  text-align: center;
+}
+.itemProfileSeparator {
+  height: 1px;
+  background: #adadad;
+  margin: 10px;
+}
+.itemProfileContainer {
+  padding: 15px;
+  .itemContainer {
+    .textProfileInfo {
+      float: left;
+      width: 70%;
+      margin-top: 15px;
+    }
+    .buttonsProfileInfo {
+      text-align: right;
+      float: left;
+      width: 30%;
+    }
+    .itemProfileInfo {
+      margin: 10px;
+      height: 60px;
+    }
+  }
+}
+
+
