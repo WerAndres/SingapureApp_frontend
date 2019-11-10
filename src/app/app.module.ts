@@ -25,8 +25,12 @@ import {
   MatSelectModule,
   MatOptionModule,
   MatSidenavModule,
+  MatExpansionModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
 } from '@angular/material';
 import { SnackBarComponent } from './_components/util/snack-bar-component/snack-bar.component';
 import { RegisterComponent } from './_components/pages/register/register.component';
@@ -68,8 +72,12 @@ import { Meta } from '@angular/platform-browser';
     MatOptionModule,
     MatSidenavModule,
     MatButtonToggleModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatExpansionModule,
     HttpClientModule,
     NgbModule,
     JwtModule.forRoot({

@@ -79,21 +79,14 @@ app-snack-bar {
   width: 100%;
   margin: 10px;
 }
-.buttonTextAwesome:hover {
-  cursor: pointer;
-}
-.buttonTextAwesome.primary:hover {
-  color: mat-color($my-theme-primary);
-}
-.buttonTextAwesome.accent:hover {
-  color: mat-color($my-theme-accent);
-}
+
 .containerPage {
   padding: 30px 100px;
+  width: 100%;
 }
 .inputProfileInfo.mat-form-field {
   float: left;
-  width: 70%;
+  width: 70% !important;
 }
 
 @media (max-width: 800px){
@@ -106,4 +99,43 @@ app-snack-bar {
   .containerPage {
     padding: 30px 10px;
   }
+  .inputProfileInfo.mat-form-field {
+    width: 100% !important;
+  }
+}
+.buttonSmall.primary {
+  background: mat-color($my-theme-primary);
+}
+.buttonSmall.accent {
+  background: mat-color($my-theme-accent);
+}
+.buttonSmall {
+  cursor: pointer;
+  min-width: 75px;
+  height: 28px;
+  padding: 5px;
+  text-align: center;
+  display: inline-block;
+  color: #FAFAFA;
+  border-radius: 5px;
+  font-size: 11px;
+  margin: 2px;
+}
+.buttonSmall.primary:hover {
+  background: #1f2b7d;
+}
+.buttonSmall.accent:hover {
+  background: #8e211e;
+}
+.mat-content i{
+  margin: 2px 5px 0px 0px;
+}
+.mat-expansion-panel-header:hover{
+  .mat-expansion-panel-header-title{
+    color: #27286d;
+    font-size: 16px;
+  }
+}
+.maxWidthFilter .mat-form-field-wrapper {
+  max-width: 300px;
 }

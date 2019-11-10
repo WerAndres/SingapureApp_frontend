@@ -31,7 +31,6 @@
   margin: 10px;
 }
 .itemProfileContainer {
-  padding: 15px;
   .itemContainer {
     .textProfileInfo {
       float: left;
@@ -40,8 +39,11 @@
     }
     .buttonsProfileInfo {
       text-align: right;
-      float: left;
+      float: right;
+    }
+    .buttonsProfileContainer{
       width: 30%;
+      float: right;
     }
     .itemProfileInfo {
       margin: 10px;
@@ -50,4 +52,26 @@
   }
 }
 
+table {
+  width: 100%;
+}
 
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+@media (max-width: 550px){
+  .itemProfileContainer {
+    .buttonsProfileContainer {
+      width: 100% !important;
+    }
+    .textProfileInfo {
+      width: 100% !important;
+    }
+  }
+}
