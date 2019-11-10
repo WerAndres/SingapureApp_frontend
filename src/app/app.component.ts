@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Usuarios } from './_models/Usuarios';
 
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
-import { ISize } from 'selenium-webdriver';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-root',
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   rolPerson: any = 'rol';
   heigthImg: any;
   widthImg: any;
+  userLE: Usuarios;
   menuItems: any = [
     {name: 'Dashboard', active: false, icon: 'fas fa-th', route: '/dashboard'},
     {name: 'Profile', active: false, icon: 'fas fa-user', route: '/profile'},
@@ -45,12 +46,10 @@ export class AppComponent implements OnInit {
   init() {
     this.ram = this.getRandomArbitrary(1, 9);
     this.activeChangedUrl();
-    this.name = JSON.parse(localStorage.getItem('user')) !== null ? JSON.parse(localStorage.getItem('user')).nombre : 'Usuario';
-    this.rolPerson = JSON.parse(localStorage.getItem('user')) !== null ?
-    JSON.parse(localStorage.getItem('user')).tipoUsuario.nombre : 'rol';
-    this.imageEnc = JSON.parse(localStorage.getItem('user')) !== null ?
-    (JSON.parse(localStorage.getItem('user')).photo !== null ? JSON.parse(localStorage.getItem('user')).photo : '') : '';
-    // tslint:disable-next-line:only-arrow-functions
+    this.userLE = JSON.parse(localStorage.getItem('user'))
+    this.name = this.userLE !== null ? this.userLE.nombre : 'Usuario';
+    this.rolPerson = this.userLE !== null ? this.userLE.tipoUsuario.nombre : 'rol';
+    this.imageEnc = this.userLE !== null ? ((this.userLE.photo === null && typeof this.userLE.photo === 'undefined') ? '' : this.userLE.photo) : '';    
   }
   activeChangedUrl() {
     const arrayPath = window.location.href.split('/');
@@ -83,13 +82,15 @@ export class AppComponent implements OnInit {
     return Math.floor(Math.random() * (max - min)) + min;
   }
   onImageLoad(event) {
-    const loadedImage = event.currentTarget;
-    // tslint:disable-next-line:no-string-literal
-    const width = loadedImage['width'];
-    // tslint:disable-next-line:no-string-literal
-    const height = loadedImage['height'];
-    this.heigthImg = height;
-    this.widthImg = width;
+    if (typeof this.imageEnc !== 'undefined' && this.imageEnc !== null) {
+      const loadedImage = event.currentTarget;
+      // tslint:disable-next-line:no-string-literal
+      const width = loadedImage['width'];
+      // tslint:disable-next-line:no-string-literal
+      const height = loadedImage['height'];
+      this.heigthImg = height;
+      this.widthImg = width;
+    }
   }
 }
 

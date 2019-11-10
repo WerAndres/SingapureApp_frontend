@@ -1,5 +1,5 @@
 <div class="containerPage row">
-  <div class="titlePage">Perfil de usuario</div>
+  <div class="titlePage">Perfil de usuario {{this.usuarioSend.tipoUsuario.nombre}}</div>
   <div class="profilePhoto col-md-4" *ngIf="!isLoading">
     <div [class]="actPhoto ? 'profileImg centrar greyUpdate' : 'centrar profileImg'">
         <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circle" alt="Avatar">
@@ -26,37 +26,124 @@
       </div>
     </div>
   </div>
-  <app-loading *ngIf="isLoading"></app-loading>
-  <div class="profileInfo col-md-8">
-      <div class="profileInfoContainer boxInfo">
-          <div class="itemProfileContainer">
-            <div class="itemProfileTitle">
-              Perfil {{usuarioSend.nombre}}
-            </div>
-            <div class="itemProfileSeparator"></div>
-            <div class="itemContainer" *ngFor="let itemProfile of jsonProfile">
-              <div class="itemProfileInfo">
-                <div *ngIf="!itemProfile.activeEdit" class="textProfileInfo">
-                    {{itemProfile.value}}
-                </div>
-                <mat-form-field *ngIf="itemProfile.activeEdit" class="inputProfileInfo">
-                  <input matInput placeholder="{{itemProfile.nameInput}}nuevo" >
-                </mat-form-field>
-                <button  (click)="clickActivated(itemProfile)" style="margin-left: 5px; margin-top: 5px;"
-                  mat-raised-button color="accent">
+  <app-loading class="centrar" *ngIf="isLoading"></app-loading>
+  <div  *ngIf="!isLoading" class="profileInfo col-md-8">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i class="fas fa-user"></i> Perfil usuario
+          </mat-panel-title>
+          <mat-panel-description>
+            {{usuarioSend.nombre}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="itemProfileContainer">
+          <div class="itemProfileTitle">
+          </div>
+          <div class="itemProfileSeparator"></div>
+          <div class="itemContainer" *ngFor="let itemProfile of jsonProfile">
+            <div class="itemProfileInfo">
+              <div *ngIf="!itemProfile.activeEdit" class="textProfileInfo">
+                  <b>{{itemProfile.nameInput}}:</b> {{itemProfile.value}}
+              </div>
+              <mat-form-field *ngIf="itemProfile.activeEdit" class="inputProfileInfo">
+                <input matInput placeholder="{{itemProfile.nameInput}} nuevo" [(ngModel)]="itemProfile.value">
+              </mat-form-field>
+              <div class="buttonsProfileInfo buttonsProfileContainer buttonTextAwesome" style="margin-top: 15px" *ngIf="!itemProfile.activeEdit">
+                <div class="buttonSmall primary" (click)="clickActivated(itemProfile)">
                   <i class="fas fa-edit"></i> Editar
-              </button>
-                <div style="margin-top: 15px">
-                  <div class="buttonsProfileInfo buttonTextAwesome primary" *ngIf="itemProfile.activeEdit" (click)="cancelActivated(itemProfile)">
-                    Guardar <i class="fas fa-window-close"></i>
+                </div>
+              </div>
+              <div style="margin-top: 15px" class="buttonsProfileContainer">
+                <div class="buttonsProfileInfo buttonTextAwesome" *ngIf="itemProfile.activeEdit">
+                  <div class="buttonSmall primary" (click)="saveUsuario(itemProfile)">
+                    <i class="fas fa-save"></i> Guardar
                   </div>
-                  <div class="buttonsProfileInfo buttonTextAwesome accent" *ngIf="itemProfile.activeEdit" (click)="cancelActivated(itemProfile)">
-                    Cancelar <i class="fas fa-window-close"></i>
+                </div>
+                <div class="buttonsProfileInfo buttonTextAwesome" *ngIf="itemProfile.activeEdit">
+                  <div class="buttonSmall accent" (click)="cancelActivated(itemProfile)">
+                    <i class="fas fa-window-close"></i> Cancelar
                   </div>
                 </div>
               </div>
             </div>
           </div>
-    </div>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Profesor' || this.usuarioSend.tipoUsuario.nombre === 'Alumno'"
+      (opened)="this.paginatorFun()">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i class="fas fa-book-open"></i> Materias asociadas
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
+
+        <mat-form-field class="maxWidthFilter">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
+
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+              <!-- ID Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+              </ng-container>
+
+              <!-- Progress Column -->
+              <ng-container matColumnDef="progress">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
+                <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+              </ng-container>
+
+              <!-- Color Column -->
+              <ng-container matColumnDef="color">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
+                <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+              </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+          </div>
+
+
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Alumno'">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i class="fas fa-street-view"></i> Padres asociados
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        Padres asociadaos
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Padre'">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+              <i class="fas fa-user-graduate"></i> Alumnos asociados
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        Alumnos asociados
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 </div>
