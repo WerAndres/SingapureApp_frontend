@@ -80,70 +80,74 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
+          <app-loading class="centrar" *ngIf="isLoadingCourses"></app-loading>
+          <div *ngIf="!isLoadingCourses">
+            <mat-form-field class="maxWidthFilter">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- materia Column -->
+                <ng-container matColumnDef="materia">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Materia </th>
+                  <td mat-cell *matCellDef="let row"> {{row.materia}} </td>
+                </ng-container>
 
 
+                <!-- curso Column -->
+                <ng-container matColumnDef="curso">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Curso </th>
+                  <td mat-cell *matCellDef="let row"> {{row.curso}} </td>
+                </ng-container>
 
-        <mat-form-field class="maxWidthFilter">
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-          </mat-form-field>
+                <!-- acciones Column -->
+                <ng-container matColumnDef="acciones">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+                  <td mat-cell *matCellDef="let row">
+                    <ng-container *ngFor="let action of row.actions">
+                      <div (click)="clickMateria(row, action.click)">
+                        <i class={{action.icon}}></i> {{action.name}}
+                      </div>
+                    </ng-container>
+                  </td>
+                </ng-container>
 
-          <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource" matSort>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                </tr>
+              </table>
 
-              <!-- ID Column -->
-              <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-              </ng-container>
-
-              <!-- Progress Column -->
-              <ng-container matColumnDef="progress">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-                <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-              </ng-container>
-
-              <!-- Name Column -->
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-              </ng-container>
-
-              <!-- Color Column -->
-              <ng-container matColumnDef="color">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-                <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-              </tr>
-            </table>
-
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
           </div>
 
-
-      </mat-expansion-panel>
-      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Alumno'">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i class="fas fa-street-view"></i> Padres asociados
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        Padres asociadaos
-      </mat-expansion-panel>
-      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Padre'">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-              <i class="fas fa-user-graduate"></i> Alumnos asociados
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        Alumnos asociados
-      </mat-expansion-panel>
-    </mat-accordion>
+          <div class="containetAdd" (click)="addMateria()">
+              <i class="fas fa-plus"></i> Adicionar materia
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Alumno'">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fas fa-street-view"></i> Padres asociados
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          Padres asociadaos
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Padre'">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+                <i class="fas fa-user-graduate"></i> Alumnos asociados
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          Alumnos asociados
+        </mat-expansion-panel>
+      </mat-accordion>
   </div>
 </div>
+
