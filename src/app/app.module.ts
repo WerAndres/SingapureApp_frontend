@@ -30,7 +30,8 @@ import {
   MatButtonToggleModule,
   MatTableModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule,
+  MatDialogModule
 } from '@angular/material';
 import { SnackBarComponent } from './_components/util/snack-bar-component/snack-bar.component';
 import { RegisterComponent } from './_components/pages/register/register.component';
@@ -39,6 +40,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './_services/middleware/AuthInterceptor.service';
 import { AuthGuardService } from './_services/middleware/AuthGuard.service';
 import { Meta } from '@angular/platform-browser';
+import { ProfileDialog } from './_components/pages/profile/profileDialog.component';
 
 @NgModule({
   declarations: [
@@ -52,10 +54,12 @@ import { Meta } from '@angular/platform-browser';
     ForumComponent,
     ActivitiesComponent,
     ResourcesComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfileDialog
   ],
   entryComponents: [
-    SnackBarComponent
+    SnackBarComponent,
+    ProfileDialog
   ],
   imports: [
     BrowserModule,
@@ -78,6 +82,7 @@ import { Meta } from '@angular/platform-browser';
     FormsModule,
     BrowserAnimationsModule,
     MatExpansionModule,
+    MatDialogModule,
     HttpClientModule,
     NgbModule,
     JwtModule.forRoot({

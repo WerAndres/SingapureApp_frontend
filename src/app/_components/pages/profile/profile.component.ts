@@ -3,35 +3,32 @@ import { MatSnackBar, MatPaginator } from '@angular/material';
 import { SnackModel } from './../../../_models/SnackModel';
 import { UsuariosService } from './../../../_services/utils/usuarios.service';
 import { Usuarios } from './../../../_models/Usuarios';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { TiposUsuarios } from '../../../_models/TiposUsuarios';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { UsuariosMateriasService } from 'src/app/_services/utils/usuariosMaterias.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ProfileDialog } from './profileDialog.component';
 
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
+export interface MateriasData {
+  id: string
+  materia: string;
+  curso: string;
+  actions: [Actions];
 }
-
-/** Constants used to fill up our data base. */
-const COLORS: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
-
+export interface Actions {
+  icon: string;
+  name: string;
+  click: string;
+}
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit, AfterViewInit {
+export class ProfileComponent implements OnInit {
   imageEnc: any;
   imageEncOld: any;
   ram: any;
@@ -45,25 +42,21 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   widthImg: any;
   jsonProfile: any = [];
   userLE: Usuarios;
-  displayedColumns: string[] = ['id', 'name', 'progress', 'color'];
-  dataSource: MatTableDataSource<UserData>;
-
+  displayedColumns: string[] = ['materia', 'curso', 'acciones'];
+  materiasArray = [];
+  dataSource: MatTableDataSource<MateriasData>;
+  isLoadingCourses = false;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  animal: string;
+  name: string;
 
   constructor(
     private usuariosService: UsuariosService,
-    public snackBar: MatSnackBar
-  ) {
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
-  }
-  ngAfterViewInit() {
-    setTimeout(() => this.dataSource.paginator = this.paginator);
-    setTimeout(() => this.dataSource.sort = this.sort);
-  }
+    private usuariosMateriasService: UsuariosMateriasService,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog
+  ) {}
   ngOnInit() {
     this.userLE = JSON.parse(localStorage.getItem('user'));
     this.ram = this.getRandomArbitrary(1, 9);
@@ -76,10 +69,36 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.usuarioSendImage.keyEmail = this.usuarioSendImage.email;
     this.imageEncOld = this.imageEnc;
     this.usuarioOld = JSON.parse(JSON.stringify(this.usuarioSend));
+    this.getMaterias();
     this.jsonProfile = [
       { value: this.usuarioSend.nombre , activeEdit: false, nameInput: 'Nombre', key: 'nombre'},
       { value: this.usuarioSend.email , activeEdit: false, nameInput: 'Email', key: 'email'}
     ];
+  }
+  getMaterias() {
+    this.isLoadingCourses = true
+    this.usuariosMateriasService.getByEmail(this.usuarioSend.email).subscribe(
+      resp => {
+        this.isLoadingCourses = false
+        resp.bussinesData.forEach(element => {
+          this.materiasArray.push({id: element.idUsuarioMateria, materia: element.materia.nombre, curso: element.materia.curso.nombre,
+            actions: [
+              {icon: 'fas fa-minus-circle', name: 'Eliminar', click: 'delete'},
+            ]
+          });
+        });
+        this.dataSource = new MatTableDataSource(this.materiasArray);
+      },
+      error => {
+        this.isLoadingCourses = false
+        this.snack.elements = error;
+        this.snack.elements.title = null;
+        this.snack.elements.message = null;
+        this.snack.type = 'error';
+        this.snack.icon = null;
+        this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+    });
+
   }
   getRandomArbitrary(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -167,19 +186,24 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     }
   }
   paginatorFun() {
-    console.log("aaaaaaaa");
     setTimeout(() => this.dataSource.paginator = this.paginator);
     setTimeout(() => this.dataSource.sort = this.sort);
   }
-}
-function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
+  clickMateria(item, action) {
+    console.log('click: ' + action + ' - ' + JSON.stringify(item));
+  }
+  addMateria(){
+    this.openDialog();
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ProfileDialog, {
+      width: '600px',
+      data: {name: this.name, animal: this.animal}
+    });
 
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
 }
