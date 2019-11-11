@@ -7,4 +7,5 @@ export class UsuariosMaterias {
   fechaActualizacion: any;
   usuario: Usuarios;
   materia: Materias;
+  email: any;
 }

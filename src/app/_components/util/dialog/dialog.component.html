@@ -1,0 +1,13 @@
+<div (click)="closeModal()" class="closex">
+    <h1 mat-dialog-title>{{data.title}}</h1>
+    <i class="fas fa-times"></i>
+</div>
+<div>
+  <div mat-dialog-content>
+      <ng-container *ngComponentOutlet="data.component"></ng-container>
+  </div>
+</div>
+<button (click)="closeModal()" style="float: right; margin: 20px 20px 0px 20px;"
+  mat-raised-button color="accent">
+  <i class="fas fa-sign-out-alt"></i> Salir
+</button>

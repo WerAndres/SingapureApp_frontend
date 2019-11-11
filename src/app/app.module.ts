@@ -40,7 +40,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './_services/middleware/AuthInterceptor.service';
 import { AuthGuardService } from './_services/middleware/AuthGuard.service';
 import { Meta } from '@angular/platform-browser';
-import { ProfileDialog } from './_components/pages/profile/profileDialog.component';
+import { TableComponent } from './_components/util/table-component/table.component';
+import { DialogComponent } from './_components/util/dialog/dialog.component';
+import { AddMateriasComponent } from './_components/pages/profile/dialog/addMaterias/add-materias.component';
 
 @NgModule({
   declarations: [
@@ -49,17 +51,21 @@ import { ProfileDialog } from './_components/pages/profile/profileDialog.compone
     RegisterComponent,
     PruebaComponent,
     SnackBarComponent,
+    TableComponent,
     LoadingComponent,
     DashboardComponent,
     ForumComponent,
     ActivitiesComponent,
     ResourcesComponent,
     ProfileComponent,
-    ProfileDialog
+    DialogComponent,
+    AddMateriasComponent
   ],
   entryComponents: [
     SnackBarComponent,
-    ProfileDialog
+    DialogComponent,
+    TableComponent,
+    AddMateriasComponent
   ],
   imports: [
     BrowserModule,
