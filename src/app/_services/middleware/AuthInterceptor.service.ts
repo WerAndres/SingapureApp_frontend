@@ -15,8 +15,8 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        const idToken = localStorage.getItem('idToken');        
-        if (req.method === 'Options') {          
+        const idToken = localStorage.getItem('idToken');
+        if (req.method === 'Options') {
           return next.handle(req);
         }
 
@@ -27,9 +27,9 @@ export class AuthInterceptorService implements HttpInterceptor {
             .set('Access-Control-Allow-Methods', 'DELETE, POST, GET, OPTIONS')
             .set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With')
           });
-        };
-        console.log('idToken: ' + idToken);
-        console.log(JSON.stringify(req.headers));
+        }
+        // console.log('idToken: ' + idToken);
+        // console.log(JSON.stringify(req.headers));
         return next.handle(req).pipe(
           catchError((err: HttpErrorResponse) => {
             console.log('err:' + JSON.stringify(err));

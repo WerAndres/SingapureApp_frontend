@@ -71,8 +71,7 @@
           </div>
         </div>
       </mat-expansion-panel>
-      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Profesor' || this.usuarioSend.tipoUsuario.nombre === 'Alumno'"
-      (opened)="this.paginatorFun()">
+      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Profesor' || this.usuarioSend.tipoUsuario.nombre === 'Alumno'">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <i class="fas fa-book-open"></i> Materias asociadas
@@ -80,52 +79,8 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-          <app-loading class="centrar" *ngIf="isLoadingCourses"></app-loading>
-          <div *ngIf="!isLoadingCourses">
-            <mat-form-field class="maxWidthFilter">
-              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-            </mat-form-field>
-
-            <div class="mat-elevation-z8">
-              <table mat-table [dataSource]="dataSource" matSort>
-
-                <!-- materia Column -->
-                <ng-container matColumnDef="materia">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Materia </th>
-                  <td mat-cell *matCellDef="let row"> {{row.materia}} </td>
-                </ng-container>
-
-
-                <!-- curso Column -->
-                <ng-container matColumnDef="curso">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Curso </th>
-                  <td mat-cell *matCellDef="let row"> {{row.curso}} </td>
-                </ng-container>
-
-                <!-- acciones Column -->
-                <ng-container matColumnDef="acciones">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
-                  <td mat-cell *matCellDef="let row">
-                    <ng-container *ngFor="let action of row.actions">
-                      <div (click)="clickMateria(row, action.click)">
-                        <i class={{action.icon}}></i> {{action.name}}
-                      </div>
-                    </ng-container>
-                  </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-                </tr>
-              </table>
-
-              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-            </div>
-          </div>
-
-          <div class="containetAdd" (click)="addMateria()">
-              <i class="fas fa-plus"></i> Adicionar materia
-          </div>
+          <app-table (onSuggest)="clickAction($event[0], $event[1])" [dataSource]="dataSource"
+            [isLoading]="isLoadingMat" [configColumns]="configColumns" [generalConfig]="generalConfig"></app-table>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Alumno'">
           <mat-expansion-panel-header>

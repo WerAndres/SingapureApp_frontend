@@ -1,27 +1,16 @@
 import { SnackBarComponent } from './../../util/snack-bar-component/snack-bar.component';
-import { MatSnackBar, MatPaginator } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { SnackModel } from './../../../_models/SnackModel';
 import { UsuariosService } from './../../../_services/utils/usuarios.service';
 import { Usuarios } from './../../../_models/Usuarios';
-import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TiposUsuarios } from '../../../_models/TiposUsuarios';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { UsuariosMateriasService } from 'src/app/_services/utils/usuariosMaterias.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { ProfileDialog } from './profileDialog.component';
-
-export interface MateriasData {
-  id: string
-  materia: string;
-  curso: string;
-  actions: [Actions];
-}
-export interface Actions {
-  icon: string;
-  name: string;
-  click: string;
-}
+import { MatDialog } from '@angular/material/dialog';
+import { MateriasData } from '../../util/interfaces/util-interfaces';
+import { DialogComponent } from '../../util/dialog/dialog.component';
+import { AddMateriasComponent } from './dialog/addMaterias/add-materias.component';
 
 @Component({
   selector: 'app-profile',
@@ -42,15 +31,11 @@ export class ProfileComponent implements OnInit {
   widthImg: any;
   jsonProfile: any = [];
   userLE: Usuarios;
-  displayedColumns: string[] = ['materia', 'curso', 'acciones'];
   materiasArray = [];
   dataSource: MatTableDataSource<MateriasData>;
-  isLoadingCourses = false;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  animal: string;
-  name: string;
-
+  configColumns = [];
+  isLoadingMat = false;
+  generalConfig: any;
   constructor(
     private usuariosService: UsuariosService,
     private usuariosMateriasService: UsuariosMateriasService,
@@ -61,7 +46,7 @@ export class ProfileComponent implements OnInit {
     this.userLE = JSON.parse(localStorage.getItem('user'));
     this.ram = this.getRandomArbitrary(1, 9);
     this.usuarioSendImage.email = this.userLE !== null ? this.userLE.email : null;
-    this.imageEnc = this.userLE !== null ? (this.userLE.photo !== null ?this.userLE.photo : '') : '';
+    this.imageEnc = this.userLE !== null ? (this.userLE.photo !== null ? this.userLE.photo : '') : '';
     this.usuarioSend.nombre = this.userLE !== null ? this.userLE.nombre : 'Usuario';
     this.usuarioSend.email = this.userLE !== null ? this.userLE.email : 'email';
     this.usuarioSend.tipoUsuario = this.userLE !== null ? this.userLE.tipoUsuario : new TiposUsuarios();
@@ -74,23 +59,33 @@ export class ProfileComponent implements OnInit {
       { value: this.usuarioSend.nombre , activeEdit: false, nameInput: 'Nombre', key: 'nombre'},
       { value: this.usuarioSend.email , activeEdit: false, nameInput: 'Email', key: 'email'}
     ];
+    this.configColumns = [
+      { value: 'materia' , title: 'Materia', action: false},
+      { value: 'curso' , title: 'Curso', action: false},
+      { value: 'acciones' , title: 'Accciones', action: true}
+    ];
+    this.generalConfig = {
+      titleAdd: 'Agregar Materias',
+      activeAddItem: true
+    };
   }
   getMaterias() {
-    this.isLoadingCourses = true
+    this.isLoadingMat = true;
     this.usuariosMateriasService.getByEmail(this.usuarioSend.email).subscribe(
       resp => {
-        this.isLoadingCourses = false
+        this.isLoadingMat = false;
+        this.materiasArray = [];
         resp.bussinesData.forEach(element => {
           this.materiasArray.push({id: element.idUsuarioMateria, materia: element.materia.nombre, curso: element.materia.curso.nombre,
-            actions: [
-              {icon: 'fas fa-minus-circle', name: 'Eliminar', click: 'delete'},
+            acciones: [
+              {icon: 'fas fa-minus-circle', name: 'Eliminar', click: 'delete', colorClass: 'accent'},
             ]
           });
         });
         this.dataSource = new MatTableDataSource(this.materiasArray);
       },
       error => {
-        this.isLoadingCourses = false
+        this.isLoadingMat = false;
         this.snack.elements = error;
         this.snack.elements.title = null;
         this.snack.elements.message = null;
@@ -147,11 +142,11 @@ export class ProfileComponent implements OnInit {
     });
     elem.activeEdit = true;
   }
-  cancelActivated(elem) {
+  cancelActivated(elem: any) {
     elem.activeEdit = false;
-    elem.value = this.usuarioOld[elem.key]
+    elem.value = this.usuarioOld[elem.key];
   }
-  saveUsuario(elem){
+  saveUsuario(elem: any) {
     elem.activeEdit = false;
     this.isLoading = true;
     this.usuarioSend[elem.key] = elem.value;
@@ -178,32 +173,45 @@ export class ProfileComponent implements OnInit {
         this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
       });
   }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      data: { component: AddMateriasComponent, title: 'Agregar materias'}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getMaterias();
+    });
+  }
+  clickAction(item: any, action: any) {
+    console.log('click desde profile: ' + action + ' - ' + JSON.stringify(item));
+    if (action === 'add') {
+      this.openDialog();
+    }
+    if (action === 'delete') {
+      this.deleteRelationUsuMat(item);
     }
   }
-  paginatorFun() {
-    setTimeout(() => this.dataSource.paginator = this.paginator);
-    setTimeout(() => this.dataSource.sort = this.sort);
-  }
-  clickMateria(item, action) {
-    console.log('click: ' + action + ' - ' + JSON.stringify(item));
-  }
-  addMateria(){
-    this.openDialog();
-  }
-  openDialog(): void {
-    const dialogRef = this.dialog.open(ProfileDialog, {
-      width: '600px',
-      data: {name: this.name, animal: this.animal}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
+  deleteRelationUsuMat(item){
+    this.isLoadingMat = true;
+    this.usuariosMateriasService.deleteRelation(item.id).subscribe(
+      resp => {
+        this.isLoadingMat = false;
+        this.snack.elements = {};
+        this.snack.elements.title = 'Borrar Registro';
+        this.snack.elements.message = 'Exitoso';
+        this.snack.type = 'ok';
+        this.snack.icon = null;
+        this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+        this.getMaterias();
+      },
+      error => {
+        this.isLoadingMat = false;
+        this.snack.elements = error;
+        this.snack.elements.title = null;
+        this.snack.elements.message = null;
+        this.snack.type = 'error';
+        this.snack.icon = null;
+        this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
     });
   }
 }

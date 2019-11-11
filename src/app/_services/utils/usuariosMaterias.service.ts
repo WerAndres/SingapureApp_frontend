@@ -1,3 +1,4 @@
+import { UsuariosMaterias } from './../../_models/UsuariosMaterias';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +21,11 @@ export class UsuariosMateriasService {
     return this.http.get<GenericResponse>(this.server + '/secured/v1/usuarioMateria/filter?email=' + email);
   }
 
-  public createRelation(materia: Materias): Observable<GenericResponse> {
-    return this.http.post<GenericResponse>(this.server + '/secured/v1/usuarioMateria/create', materia);
+  public createRelation(email: string, idMateria: number): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(this.server + '/secured/v1/usuarioMateria/create', {email, materia: {idMateria}});
+  }
+
+  public deleteRelation(idUsuarioMateria: number): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(this.server + '/secured/v1/usuarioMateria/delete', {idUsuarioMateria});
   }
 }

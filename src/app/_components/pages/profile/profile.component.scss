@@ -52,10 +52,6 @@
   }
 }
 
-table {
-  width: 100%;
-}
-
 .mat-form-field {
   font-size: 14px;
   width: 100%;
@@ -74,17 +70,4 @@ td, th {
       width: 100% !important;
     }
   }
-}
-.containetAdd{
-  margin: 20px;
-  float: right;
-  font-weight: 600;
-  i{
-    font-size: 10px;
-  }
-}
-.containetAdd:hover{
-  color: mat-color($my-theme-primary);
-  cursor: pointer;
-  font-size: 16px;
 }

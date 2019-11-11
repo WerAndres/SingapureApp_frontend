@@ -1,0 +1,27 @@
+@import '~@angular/material/theming';
+
+@import '../../../../assets/styles/theme.scss';
+
+.closex {
+  width: 100%;
+  display: inline-block;
+  i {
+    float: right;
+    width: 10%;
+    text-align: right;
+  }
+  i:hover{
+    color: mat-color($my-theme-accent);
+    cursor: pointer;
+    font-size: 18px;
+  }
+  h1{
+    width: 80%;
+    font-weight: 600;
+    float: left;
+    text-align: left;
+  }
+}
+.mat-dialog-content{
+  padding: 10px 30px;
+}
