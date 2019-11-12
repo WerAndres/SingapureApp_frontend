@@ -5,10 +5,14 @@
       </div>
   </div>
   <div class="text">
-    <ng-container  <div *ngIf="data.type == 'error'">
-      <div *ngIf="data.elements.error == null">
+    <ng-container  *ngIf="data.type == 'error'">
+      <div *ngIf="data.elements.error == null && data.elements.message == null">
         <b>Error 999</b><br>
         {{ data }}
+      </div>
+      <div *ngIf="data.elements.error == null && data.elements.message != null">
+        <b>{{data.elements.title}}</b><br>
+        {{data.elements.message}}
       </div>
       <div *ngIf="data.elements.error != null && data.elements.error.trace != null && data.elements.status != 0">
         <b>Error {{ data.elements.error.status }}-999</b><br>

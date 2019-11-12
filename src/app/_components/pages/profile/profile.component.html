@@ -79,8 +79,8 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-          <app-table (onSuggest)="clickAction($event[0], $event[1])" [dataSource]="dataSource"
-            [isLoading]="isLoadingMat" [configColumns]="configColumns" [generalConfig]="generalConfig"></app-table>
+          <app-table (onSuggest)="clickActionMat($event[0], $event[1])" [dataSource]="dataSourceMat"
+            [isLoading]="isLoadingMat" [configColumns]="configColumnsMat" [generalConfig]="generalConfigMat"></app-table>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Alumno'">
           <mat-expansion-panel-header>
@@ -90,7 +90,8 @@
             <mat-panel-description>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          Padres asociadaos
+          <app-table (onSuggest)="clickActionPad($event[0], $event[1])" [dataSource]="dataSourcePad"
+            [isLoading]="isLoadingPad" [configColumns]="configColumnsPad" [generalConfig]="generalConfigPad"></app-table>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Padre'">
           <mat-expansion-panel-header>
