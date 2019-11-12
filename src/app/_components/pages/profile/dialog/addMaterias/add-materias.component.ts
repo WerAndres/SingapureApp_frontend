@@ -6,7 +6,6 @@ import { MateriasService } from 'src/app/_services/utils/materias.service';
 import { Usuarios } from 'src/app/_models/Usuarios';
 import { MateriasData } from 'src/app/_components/util/interfaces/util-interfaces';
 import { SnackBarComponent } from 'src/app/_components/util/snack-bar-component/snack-bar.component';
-import { Materias } from 'src/app/_models/Materias';
 import { UsuariosMaterias } from 'src/app/_models/UsuariosMaterias';
 
 

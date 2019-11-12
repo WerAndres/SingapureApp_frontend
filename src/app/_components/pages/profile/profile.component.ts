@@ -8,9 +8,11 @@ import { TiposUsuarios } from '../../../_models/TiposUsuarios';
 import { MatTableDataSource } from '@angular/material/table';
 import { UsuariosMateriasService } from 'src/app/_services/utils/usuariosMaterias.service';
 import { MatDialog } from '@angular/material/dialog';
-import { MateriasData } from '../../util/interfaces/util-interfaces';
+import { MateriasData, PadresData } from '../../util/interfaces/util-interfaces';
 import { DialogComponent } from '../../util/dialog/dialog.component';
 import { AddMateriasComponent } from './dialog/addMaterias/add-materias.component';
+import { PadresAlumnosService } from 'src/app/_services/utils/padresAlumnos.service';
+import { AddPadresComponent } from './dialog/addPadres/add-padres.component';
 
 @Component({
   selector: 'app-profile',
@@ -32,13 +34,19 @@ export class ProfileComponent implements OnInit {
   jsonProfile: any = [];
   userLE: Usuarios;
   materiasArray = [];
-  dataSource: MatTableDataSource<MateriasData>;
-  configColumns = [];
+  padresArray = [];
+  dataSourceMat: MatTableDataSource<MateriasData>;
+  dataSourcePad: MatTableDataSource<PadresData>;
+  configColumnsMat = [];
+  configColumnsPad = [];
   isLoadingMat = false;
-  generalConfig: any;
+  isLoadingPad = false;
+  generalConfigMat: any;
+  generalConfigPad: any;
   constructor(
     private usuariosService: UsuariosService,
     private usuariosMateriasService: UsuariosMateriasService,
+    private padresAlumnosService: PadresAlumnosService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {}
@@ -55,17 +63,26 @@ export class ProfileComponent implements OnInit {
     this.imageEncOld = this.imageEnc;
     this.usuarioOld = JSON.parse(JSON.stringify(this.usuarioSend));
     this.getMaterias();
+    this.getPadres();
     this.jsonProfile = [
       { value: this.usuarioSend.nombre , activeEdit: false, nameInput: 'Nombre', key: 'nombre'},
       { value: this.usuarioSend.email , activeEdit: false, nameInput: 'Email', key: 'email'}
     ];
-    this.configColumns = [
+    this.configColumnsMat = [
       { value: 'materia' , title: 'Materia', action: false},
       { value: 'curso' , title: 'Curso', action: false},
       { value: 'acciones' , title: 'Accciones', action: true}
     ];
-    this.generalConfig = {
-      titleAdd: 'Agregar Materias',
+    this.configColumnsPad = [
+      { value: 'padre' , title: 'Padre', action: false},
+      { value: 'acciones' , title: 'Accciones', action: true}
+    ];
+    this.generalConfigMat = {
+      titleAdd: 'Agregar materia',
+      activeAddItem: true
+    };
+    this.generalConfigPad = {
+      titleAdd: 'Asociar padre',
       activeAddItem: true
     };
   }
@@ -82,7 +99,7 @@ export class ProfileComponent implements OnInit {
             ]
           });
         });
-        this.dataSource = new MatTableDataSource(this.materiasArray);
+        this.dataSourceMat = new MatTableDataSource(this.materiasArray);
       },
       error => {
         this.isLoadingMat = false;
@@ -93,6 +110,35 @@ export class ProfileComponent implements OnInit {
         this.snack.icon = null;
         this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
     });
+
+  }
+  getPadres() {
+    this.isLoadingPad = true;
+    const rol = this.userLE.tipoUsuario.nombre;
+    if (rol !== 'Profesor' && rol !== 'Padre') {
+      this.padresAlumnosService.getByEmail(this.usuarioSend.email, rol).subscribe(
+        resp => {
+          this.isLoadingPad = false;
+          this.padresArray = [];
+          resp.bussinesData.forEach(element => {
+            this.padresArray.push({id: element.idPadreAlumno, padre: element.padre.nombre,
+              acciones: [
+                {icon: 'fas fa-minus-circle', name: 'Eliminar', click: 'delete', colorClass: 'accent'},
+              ]
+            });
+          });
+          this.dataSourcePad = new MatTableDataSource(this.padresArray);
+        },
+        error => {
+          this.isLoadingPad = false;
+          this.snack.elements = error;
+          this.snack.elements.title = null;
+          this.snack.elements.message = null;
+          this.snack.type = 'error';
+          this.snack.icon = null;
+          this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+      });
+    }
 
   }
   getRandomArbitrary(min, max) {
@@ -173,7 +219,7 @@ export class ProfileComponent implements OnInit {
         this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
       });
   }
-  openDialog(): void {
+  openDialogMat(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '600px',
       data: { component: AddMateriasComponent, title: 'Agregar materias'}
@@ -182,10 +228,28 @@ export class ProfileComponent implements OnInit {
       this.getMaterias();
     });
   }
-  clickAction(item: any, action: any) {
+  openDialogPad(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      data: { component: AddPadresComponent, title: 'Asociar padres'}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getPadres();
+    });
+  }
+  clickActionMat(item: any, action: any) {
     console.log('click desde profile: ' + action + ' - ' + JSON.stringify(item));
     if (action === 'add') {
-      this.openDialog();
+      this.openDialogMat();
+    }
+    if (action === 'delete') {
+      this.deleteRelationUsuMat(item);
+    }
+  }
+  clickActionPad(item: any, action: any) {
+    console.log('click desde profile: ' + action + ' - ' + JSON.stringify(item));
+    if (action === 'add') {
+      this.openDialogPad();
     }
     if (action === 'delete') {
       this.deleteRelationUsuMat(item);

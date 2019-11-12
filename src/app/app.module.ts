@@ -43,6 +43,7 @@ import { Meta } from '@angular/platform-browser';
 import { TableComponent } from './_components/util/table-component/table.component';
 import { DialogComponent } from './_components/util/dialog/dialog.component';
 import { AddMateriasComponent } from './_components/pages/profile/dialog/addMaterias/add-materias.component';
+import { AddPadresComponent } from './_components/pages/profile/dialog/addPadres/add-padres.component';
 
 @NgModule({
   declarations: [
@@ -59,13 +60,15 @@ import { AddMateriasComponent } from './_components/pages/profile/dialog/addMate
     ResourcesComponent,
     ProfileComponent,
     DialogComponent,
-    AddMateriasComponent
+    AddMateriasComponent,
+    AddPadresComponent
   ],
   entryComponents: [
     SnackBarComponent,
     DialogComponent,
     TableComponent,
-    AddMateriasComponent
+    AddMateriasComponent,
+    AddPadresComponent
   ],
   imports: [
     BrowserModule,

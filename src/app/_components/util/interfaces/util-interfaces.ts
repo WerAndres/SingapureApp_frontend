@@ -10,3 +10,10 @@ export interface MateriasData {
   curso: string;
   acciones: [ActionsTable];
 }
+
+
+export interface PadresData {
+  id: string;
+  padre: string;
+  acciones: [ActionsTable];
+}

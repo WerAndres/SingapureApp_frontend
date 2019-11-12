@@ -1,0 +1,10 @@
+<app-loading class="centrar" *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading">
+  <mat-form-field>
+    <input matInput placeholder="Email del padre" [(ngModel)]="emailParents">
+  </mat-form-field>
+  <button (click)="addPadre()"
+    mat-raised-button color="primary">
+    <i class="fas fa-plus"></i> agregar
+  </button>
+</div>
