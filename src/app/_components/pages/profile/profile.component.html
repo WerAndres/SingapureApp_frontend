@@ -79,31 +79,32 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-          <app-table (onSuggest)="clickActionMat($event[0], $event[1])" [dataSource]="dataSourceMat"
+        <app-table (onSuggest)="clickActionMat($event[0], $event[1])" [dataSource]="dataSourceMat"
             [isLoading]="isLoadingMat" [configColumns]="configColumnsMat" [generalConfig]="generalConfigMat"></app-table>
-        </mat-expansion-panel>
-        <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Alumno'">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <i class="fas fa-street-view"></i> Padres asociados
-            </mat-panel-title>
-            <mat-panel-description>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <app-table (onSuggest)="clickActionPad($event[0], $event[1])" [dataSource]="dataSourcePad"
-            [isLoading]="isLoadingPad" [configColumns]="configColumnsPad" [generalConfig]="generalConfigPad"></app-table>
-        </mat-expansion-panel>
-        <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Padre'">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-                <i class="fas fa-user-graduate"></i> Alumnos asociados
-            </mat-panel-title>
-            <mat-panel-description>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          Alumnos asociados
-        </mat-expansion-panel>
-      </mat-accordion>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Alumno'">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i class="fas fa-street-view"></i> Padres asociados
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-table (onSuggest)="clickActionPad($event[0], $event[1])" [dataSource]="dataSourcePad"
+          [isLoading]="isLoadingPad" [configColumns]="configColumnsPad" [generalConfig]="generalConfigPad"></app-table>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Padre'">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+              <i class="fas fa-user-graduate"></i> Alumnos asociados
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-table (onSuggest)="clickActionAlu($event[0], $event[1])" [dataSource]="dataSourceAlu"
+          [isLoading]="isLoadingAlu" [configColumns]="configColumnsAlu" [generalConfig]="generalConfigAlu"></app-table>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 </div>
 

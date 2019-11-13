@@ -30,7 +30,7 @@ export class PadresAlumnosService {
      {padre: {email: emailPadre}, alumno: {email: emailAlumno}});
   }
 
-  public deleteRelation(idUsuarioMateria: number): Observable<GenericResponse> {
-    return this.http.post<GenericResponse>(this.server + '/secured/v1/padresAlumnos/delete', {idUsuarioMateria});
+  public deleteRelation(idPadreAlumno: number): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(this.server + '/secured/v1/padresAlumnos/delete', {idPadreAlumno});
   }
 }

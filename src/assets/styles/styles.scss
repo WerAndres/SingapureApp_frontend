@@ -57,8 +57,23 @@ app-snack-bar {
   height: 150px;
   background-position: 50% 50% !important;
 }
+.circleSmall{
+  border-radius: 50%;
+  width: 35px;
+  vertical-align: middle;
+  height: 35px;
+  background-position: 50% 50% !important;
+}
 .menuBar .mat-drawer-inner-container {
   background: mat-color($my-theme-accent);
+}
+.menuBarForum .mat-drawer-inner-container {
+  background: #FEFEFE;
+}
+.menuBarForum{
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.3);
 }
 .menuBarOp.mat-card{
   padding: 0px !important;
@@ -102,6 +117,12 @@ app-snack-bar {
   .inputProfileInfo.mat-form-field {
     width: 100% !important;
   }
+  .mat-expansion-panel-body {
+    padding: 10px !important;
+  }
+  .mat-dialog-content{
+    padding: 10px !important;
+  }
 }
 .buttonSmall.primary {
   background: mat-color($my-theme-primary);
@@ -135,4 +156,51 @@ app-snack-bar {
     color: #27286d;
     font-size: 16px;
   }
+}
+.profileImg {
+  border: 5px solid mat-color($my-theme-primary);
+  border-radius: 50%;
+  width: 160px;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.4);
+}
+.profileImgSmall {
+  border: 3px solid #303f9f;
+  border-radius: 50%;
+  width: 40px;
+  box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.4);
+  height: 40px;
+  float: left;
+}
+.latMenu{
+  border-radius: 0px;
+  width: 100%;
+  height: 50vh;
+}
+button:hover{
+  font-size: 15px !important;
+  opacity: 0.9;
+}
+
+.mat-expansion-panel-body {
+  padding: 0 24px 16px;
+}
+
+.expandForo{
+  .mat-expansion-panel-body {
+    padding: 0px;
+    margin: 0px;
+  }
+}
+.iconRef.white {
+  color: #FAFAFA;
+}
+.iconRef {
+  font-size: 15px;
+}
+.iconRef:hover {
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 16px;
 }

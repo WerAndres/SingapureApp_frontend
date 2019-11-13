@@ -21,6 +21,10 @@ export class UsuariosMateriasService {
     return this.http.get<GenericResponse>(this.server + '/secured/v1/usuarioMateria/filter?email=' + email);
   }
 
+  public getByEmailPadre(email): Observable<GenericResponse> {
+    return this.http.get<GenericResponse>(this.server + '/secured/v1/usuarioMateria/filterPadre?email=' + email);
+  }
+
   public createRelation(email: string, idMateria: number): Observable<GenericResponse> {
     return this.http.post<GenericResponse>(this.server + '/secured/v1/usuarioMateria/create', {email, materia: {idMateria}});
   }

@@ -1,4 +1,5 @@
 import { Cursos } from './Cursos';
+import { PadresAlumnos } from './PadresAlumnos';
 
 export class Materias {
   idMateria: any;
@@ -6,4 +7,5 @@ export class Materias {
   fechaActualizacion: any;
   nombre: any;
   curso: Cursos;
+  usuariosAlumnos: PadresAlumnos[];
 }

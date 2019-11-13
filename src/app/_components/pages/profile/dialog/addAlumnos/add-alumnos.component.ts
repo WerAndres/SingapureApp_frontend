@@ -7,12 +7,12 @@ import { PadresAlumnosService } from 'src/app/_services/utils/padresAlumnos.serv
 
 
 @Component({
-  selector: 'app-add-padres',
-  templateUrl: './add-padres.component.html',
+  selector: 'app-add-alumnos',
+  templateUrl: './add-alumnos.component.html',
   styleUrls: ['../../profile.component.scss']
 })
-export class AddPadresComponent implements OnInit {
-  emailParents = '';
+export class AddAlumnosComponent implements OnInit {
+  emailStudent = '';
   snack: SnackModel = new SnackModel();
   isLoading = false;
   userLE: Usuarios;
@@ -24,19 +24,19 @@ export class AddPadresComponent implements OnInit {
   ngOnInit() {
     this.userLE = JSON.parse(localStorage.getItem('user'));
   }
-  addPadre() {
-    if (this.emailParents !== '') {
+  addAlumno() {
+    if (this.emailStudent !== '') {
       this.isLoading = true;
-      this.padresAlumnosService.createRelation(this.emailParents, this.userLE.email).subscribe(
+      this.padresAlumnosService.createRelation(this.userLE.email, this.emailStudent).subscribe(
         resp => {
           this.isLoading = false;
           this.snack.elements = {};
-          this.snack.elements.title = 'Agregar Registro de Padre';
+          this.snack.elements.title = 'Agregar Registro de Alumno';
           this.snack.elements.message = 'Exitoso';
           this.snack.type = 'ok';
           this.snack.icon = null;
           this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
-          this.emailParents = '';
+          this.emailStudent = '';
         },
         error => {
           this.isLoading = false;
