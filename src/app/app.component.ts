@@ -24,11 +24,12 @@ export class AppComponent implements OnInit {
   userLE: Usuarios;
   menuItems: any = [
     {name: 'Dashboard', active: false, icon: 'fas fa-th', route: '/dashboard'},
-    {name: 'Profile', active: false, icon: 'fas fa-user', route: '/profile'},
-    {name: 'Forum', active: false, icon: 'fas fa-comments', route: '/forum'},
-    {name: 'Activities', active: false, icon: 'fas fa-tablet-alt', route: '/activities'},
-    {name: 'Resources', active: false, icon: 'fas fa-bolt', route: '/resources'},
-    {name: 'Logout', active: false, icon: 'fas fa-sign-out-alt', route: '/login'},
+    {name: 'Perfil', active: false, icon: 'fas fa-user', route: '/profile'},
+    {name: 'Gestión academica', active: false, icon: 'fas fa-tasks', route: '/academicManagement'},
+    {name: 'Foro', active: false, icon: 'fas fa-comments', route: '/forum'},
+    {name: 'Actividades', active: false, icon: 'fas fa-tablet-alt', route: '/activities'},
+    {name: 'Recursos didácticos', active: false, icon: 'fas fa-bolt', route: '/resources'},
+    {name: 'Salir', active: false, icon: 'fas fa-sign-out-alt', route: '/login'},
   ];
   constructor(private router: Router, private route: ActivatedRoute) {
     router.events.subscribe((val) => {
@@ -49,7 +50,7 @@ export class AppComponent implements OnInit {
     this.userLE = JSON.parse(localStorage.getItem('user'))
     this.name = this.userLE !== null ? this.userLE.nombre : 'Usuario';
     this.rolPerson = this.userLE !== null ? this.userLE.tipoUsuario.nombre : 'rol';
-    this.imageEnc = this.userLE !== null ? ((this.userLE.photo === null && typeof this.userLE.photo === 'undefined') ? '' : this.userLE.photo) : '';    
+    this.imageEnc = this.userLE !== null && typeof this.userLE !== 'undefined' ? ((this.userLE.photo === null || typeof this.userLE.photo === 'undefined') ? '' : this.userLE.photo) : '';
   }
   activeChangedUrl() {
     const arrayPath = window.location.href.split('/');

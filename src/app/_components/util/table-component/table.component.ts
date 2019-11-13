@@ -25,6 +25,7 @@ export class TableComponent implements AfterViewInit, OnInit {
       // tslint:disable-next-line: no-string-literal
       this.displayedColumns.push(element['value']);
     });
+    this.paginatorFun();
   }
 
   ngAfterViewInit() {
@@ -33,7 +34,6 @@ export class TableComponent implements AfterViewInit, OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -47,6 +47,11 @@ export class TableComponent implements AfterViewInit, OnInit {
 
   clickAction(item, action): void {
     this.onSuggest.emit([item, action]);
+  }
+
+  onChangeLength(data) {
+    this.paginatorFun();
+    return this.dataSource.data.length;
   }
 
 }

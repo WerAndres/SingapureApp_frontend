@@ -4,7 +4,10 @@
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
   </mat-form-field>
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <div *ngIf="onChangeLength(dataSource) <= 0" class="centrar" style="padding: 40px 20px 20px 20px;">
+      No existen resultados
+    </div>
+    <table mat-table *ngIf="onChangeLength(dataSource) > 0" [dataSource]="dataSource" matSort>
 
       <ng-container *ngFor="let item of configColumns">
         <ng-container matColumnDef="{{item.value}}" *ngIf="!item.action">
@@ -34,7 +37,7 @@
   </div>
 </div>
 
-<button *ngIf="generalConfig.activeAddItem" (click)="clickAction(null, 'add')" style="float: right; margin: 20px;"
+<button *ngIf="generalConfig['activeAddItem']" (click)="clickAction(null, 'add')" style="float: right; margin: 20px;"
   mat-raised-button color="primary">
-  <i class="fas fa-plus"></i> {{generalConfig.titleAdd}}
+  <i class="fas fa-plus"></i> {{generalConfig['titleAdd']}}
 </button>

@@ -7,15 +7,15 @@ import { GenericResponse } from '../../_models/GenericResponse';
 @Injectable({
   providedIn: 'root'
 })
-export class MateriasService {
+export class TemasService {
   server = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
   public getAll(): Observable<GenericResponse> {
-    return this.http.get<GenericResponse>(this.server + '/secured/v1/materias');
+    return this.http.get<GenericResponse>(this.server + '/secured/v1/temas');
   }
 
   public getAllFilter(email): Observable<GenericResponse> {
-    return this.http.get<GenericResponse>(this.server + '/secured/v1/materias/filter?email=' + email);
+    return this.http.get<GenericResponse>(this.server + '/secured/v1/temas/filter?email=' + email);
   }
 }

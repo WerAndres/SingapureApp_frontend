@@ -44,6 +44,7 @@ import { TableComponent } from './_components/util/table-component/table.compone
 import { DialogComponent } from './_components/util/dialog/dialog.component';
 import { AddMateriasComponent } from './_components/pages/profile/dialog/addMaterias/add-materias.component';
 import { AddPadresComponent } from './_components/pages/profile/dialog/addPadres/add-padres.component';
+import { AddAlumnosComponent } from './_components/pages/profile/dialog/addAlumnos/add-alumnos.component';
 
 @NgModule({
   declarations: [
@@ -61,14 +62,16 @@ import { AddPadresComponent } from './_components/pages/profile/dialog/addPadres
     ProfileComponent,
     DialogComponent,
     AddMateriasComponent,
-    AddPadresComponent
+    AddPadresComponent,
+    AddAlumnosComponent
   ],
   entryComponents: [
     SnackBarComponent,
     DialogComponent,
     TableComponent,
     AddMateriasComponent,
-    AddPadresComponent
+    AddPadresComponent,
+    AddAlumnosComponent
   ],
   imports: [
     BrowserModule,

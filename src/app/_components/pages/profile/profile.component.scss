@@ -1,14 +1,6 @@
 @import '~@angular/material/theming';
 @import '../../../../assets/styles/theme.scss';
 
-.profileImg {
-  border: 5px solid mat-color($my-theme-primary);
-  border-radius: 50%;
-  width: 160px;
-  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.4);
-}
 .greyUpdate {
   opacity: 0.4;
 }

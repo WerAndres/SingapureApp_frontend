@@ -1,3 +1,4 @@
+
 export interface ActionsTable {
   icon: string;
   name: string;
@@ -17,3 +18,16 @@ export interface PadresData {
   padre: string;
   acciones: [ActionsTable];
 }
+
+export interface AlumnosData {
+  id: string;
+  alumno: string;
+  acciones: [ActionsTable];
+}
+export interface TemasData {
+  id: string;
+  tema: string;
+  materia: string;
+  acciones: [ActionsTable];
+}
+

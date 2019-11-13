@@ -1,0 +1,10 @@
+<app-loading class="centrar" *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading">
+  <mat-form-field>
+    <input matInput placeholder="Email del alumno" [(ngModel)]="emailStudent">
+  </mat-form-field>
+  <button (click)="addAlumno()"
+    mat-raised-button color="primary">
+    <i class="fas fa-plus"></i> agregar
+  </button>
+</div>
