@@ -102,8 +102,8 @@ import { AddAlumnosComponent } from './_components/pages/profile/dialog/addAlumn
         tokenGetter: function  tokenGetter() {
              return JSON.parse(localStorage.getItem('user')).token;
         },
-        whitelistedDomains: ['localhost:4220'],
-        blacklistedRoutes: ['http://localhost:4220/login']
+        whitelistedDomains: ['localhost:4224'],
+        blacklistedRoutes: ['http://localhost:4224/login']
       }
     })
   ],

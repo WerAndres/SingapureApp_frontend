@@ -1,1 +1,155 @@
-Resources
+<div class="containerPage">
+  <div class="titlePage">Recursos Disponibles</div>
+
+  <div class="containerResources">
+    <mat-drawer-container class="app-container" autosize style="min-height: 60vh;">
+      <mat-drawer class="menuBarForum" #drawer [mode]="this.screenWidth > 800 ? 'side' : 'push'" style="border-radius: 10px 0px 0px 0px; max-width: 300px;">
+        <div class="listaMaterias">
+          <mat-card class="menuBarOp" style="border-radius: 0px; overflow: auto;">
+            <div class="titleListaMaterias" (click)="toProfile()">
+              <div class="photoUser">
+                  <div class="centrar profileImgSmall">
+                      <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circleSmall" alt="Avatar">
+                      <div id="imageProfile" *ngIf="imageEnc !== ''" [ngStyle]="{'background': 'url(' + imageEnc + ')', 'background-size': heigthImg > widthImg ? '100% auto' : 'auto 100%'}" class="circleSmall"></div>
+                      <img *ngIf="imageEnc !== ''" style="display: none" [src]="this.imageEnc" (load)="onImageLoad($event)" />
+                  </div>
+              </div>
+              <div class="textTitleListaMaterias">
+                  {{userLE.nombre}}
+              </div>
+              <div class="iconTitleListaMaterias">
+              </div>
+            </div>
+          </mat-card>
+          <mat-card class="menuBarBottom latMenu" style="border-radius: 0px">
+            <app-loading class="centrar" *ngIf="isLoadingMat"></app-loading>
+            <ng-container *ngIf="!isLoadingMat">
+              <div class="centrar contListaMaterias" *ngIf="listMatDef.length <= 0">
+                No hay registros
+              </div>
+              <div *ngIf="listMatDef.length > 0">
+                <mat-accordion>
+                  <ng-container *ngFor="let item of listMatDef">
+                    <mat-expansion-panel class="expandForo">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title class="itemListaMaterias">
+                            <div class="expandForoTextItem">
+                              {{item.nombre}}
+                              <ng-container *ngIf="item.alumnosArray.length > 0">
+                                <div class="expandForoTextAlumItem">
+                                  <ng-container *ngFor="let ele of item.alumnosArray ; let i = index">
+                                    <ng-container *ngIf="i > 0">
+                                      - {{ele}}
+                                    </ng-container>
+                                    <ng-container *ngIf="i == 0">
+                                      {{ele}}
+                                    </ng-container>
+                                  </ng-container>
+                                </div>
+                              </ng-container>
+                            </div>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div class="contListaMaterias">
+                        <ng-container *ngFor="let ele of item.temasArray" >
+                          <div class="itemListaMaterias" (click)="clickItemChannel(ele)">
+                            <div class="textItem">
+                                {{ele.nombre}}
+                            </div>
+                            <div class="iconItem">
+                                <p>Abrir</p> <i class="fas fa-arrow-circle-right"></i>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </mat-expansion-panel>
+                  </ng-container>
+                </mat-accordion>
+              </div>
+            </ng-container>
+          </mat-card>
+        </div>
+      </mat-drawer>
+      <mat-drawer-content>
+        <div class="menuTop">
+          <div [ngClass]="drawer.opened ? 'bordert upForoContainer' : 'borderc upForoContainer'">
+            <div id='toogleMenu' class="containIcon toogleChannel" (click)="drawer.toggle()">
+              <div class="iconToogleChannel">
+                <i *ngIf="drawer.opened" class="fas fa-arrow-left"></i>
+                <i class="fas fa-bars"></i>
+                <i *ngIf="!drawer.opened" class="fas fa-arrow-right"></i>
+              </div>
+              <div class="titleToogleChannel">{{'Clases'}}</div>
+            </div>
+            <div class="titleChannel centrar">
+              <div class="contTitleChannel">
+                <div class="textTitleChannel">
+                  {{titleClass}}
+                </div>
+              </div>
+            </div>
+            <div class="optionsChannelResources">
+              <mat-form-field>
+                <mat-label>Tema</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let food of foods" [value]="food.value">
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="downResources">
+          <div class="upPrincipal">
+            <div class="areaResource centrar">
+              <div class="areaTextoRep" *ngIf="resourceActive == 'texto'">
+                <div class="readText">
+                  {{textRep}}
+                </div>
+              </div>
+              <div class="areaAudioRep" *ngIf="resourceActive == 'audio'">
+                <div *ngIf="urlAudio !== ''">
+                  <iframe [src]="getVideoIframe(urlAudio)"></iframe>
+                </div>
+                <div *ngIf="urlAudio === ''">
+                  Seleccione un tema por favor
+                </div>
+              </div>
+              <div class="areaVideoRep" *ngIf="resourceActive == 'video'">
+                <div *ngIf="urlVideo !== ''">
+                  <iframe [src]="getVideoIframe(urlVideo)"></iframe>
+                </div>
+                <div *ngIf="urlVideo === ''">
+                  Seleccione un tema por favor
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="downPrincipal">
+            <div class="areaUx">
+              <div class="areaVideo centrar" *ngIf="resourceActive == 'texto' || resourceActive == 'audio'">
+                  <button style="margin: auto;" (click)="viewPanwl('video')"
+                  mat-raised-button color="primary">
+                  <i class="fas fa-video"></i> Ver video
+                </button>
+              </div>
+              <div class="areaAudio centrar" *ngIf="resourceActive == 'texto' || resourceActive == 'video'">
+                <button style="margin: auto;" (click)="viewPanwl('audio')"
+                  mat-raised-button color="primary">
+                  <i class="fas fa-headphones-alt"></i> Escuchar recurso
+                </button>
+              </div>
+              <div class="areaTexto centrar" *ngIf="resourceActive == 'video' || resourceActive == 'audio'">
+                  <button style="margin: auto;" (click)="viewPanwl('texto')"
+                  mat-raised-button color="primary">
+                  <i class="fas fa-book"></i> Leer recurso
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+<div>

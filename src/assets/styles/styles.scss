@@ -96,7 +96,7 @@ app-snack-bar {
 }
 
 .containerPage {
-  padding: 30px 100px;
+  padding: 10px 100px 30px 100px;
   width: 100%;
 }
 .inputProfileInfo.mat-form-field {
@@ -203,4 +203,35 @@ button:hover{
   cursor: pointer;
   opacity: 0.7;
   font-size: 16px;
+}
+.optionsChannelResources {
+  float: right;
+  text-align: rigth;
+  width: 20%;
+  min-width: 56px;
+  height: 22px;
+  mat-form-field{
+    height: 30px;
+    min-width: 56px;
+    .mat-form-field-wrapper{
+      position: relative;
+      top: -8px;
+      font-size: 12px;
+      mat-label{
+        color: #FAFAFA
+      }
+    }
+    .mat-select-value-text{
+      color: #FAFAFA
+    }
+    .mat-form-field-underline{
+      background-color: #FAFAFA;
+    }
+    .mat-select-arrow{
+      color: #FAFAFA;
+    }
+    .mat-form-field-infix{
+      width: 100%;
+    }
+  }
 }
