@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.UserLoginSend).subscribe(
       resp => {
         this.isLoading = false;
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/profile']);
       },
       error => {
         this.isLoading = false;

@@ -77,7 +77,7 @@ export class AppComponent implements OnInit {
     });
   }
   routeDashBoard() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/profile']);
   }
   getRandomArbitrary(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
