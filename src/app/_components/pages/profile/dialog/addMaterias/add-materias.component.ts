@@ -17,7 +17,7 @@ import { UsuariosMaterias } from 'src/app/_models/UsuariosMaterias';
 export class AddMateriasComponent implements OnInit {
   userLE: Usuarios;
   materiasArray = [];
-  dataSource: MatTableDataSource<MateriasData>;
+  dataSource = new MatTableDataSource();
   configColumns = [];
   generalConfig = {};
   isLoadingMat = false;
@@ -56,7 +56,7 @@ export class AddMateriasComponent implements OnInit {
             ]
           });
         });
-        this.dataSource = new MatTableDataSource(this.materiasArray);
+        this.dataSource.data = this.materiasArray;
       },
       error => {
         this.isLoadingMat = false;

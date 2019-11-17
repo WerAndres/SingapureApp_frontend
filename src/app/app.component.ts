@@ -25,9 +25,8 @@ export class AppComponent implements OnInit {
   menuItems: any = [
     {name: 'Dashboard', active: false, icon: 'fas fa-th', route: '/dashboard'},
     {name: 'Perfil', active: false, icon: 'fas fa-user', route: '/profile'},
-    {name: 'Gestión academica', active: false, icon: 'fas fa-tasks', route: '/academicManagement'},
+    {name: 'Gestión academica', active: false, icon: 'fas fa-tasks', route: '/academicManagment'},
     {name: 'Foro', active: false, icon: 'fas fa-comments', route: '/forum'},
-    {name: 'Actividades', active: false, icon: 'fas fa-tablet-alt', route: '/activities'},
     {name: 'Recursos didácticos', active: false, icon: 'fas fa-bolt', route: '/resources'},
     {name: 'Salir', active: false, icon: 'fas fa-sign-out-alt', route: '/login'},
   ];

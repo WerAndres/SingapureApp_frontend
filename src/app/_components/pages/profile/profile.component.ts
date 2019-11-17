@@ -37,9 +37,9 @@ export class ProfileComponent implements OnInit {
   materiasArray = [];
   padresArray = [];
   alumnosArray = [];
-  dataSourceMat: MatTableDataSource<MateriasData>;
-  dataSourcePad: MatTableDataSource<PadresData>;
-  dataSourceAlu: MatTableDataSource<AlumnosData>;
+  dataSourceMat = new MatTableDataSource();
+  dataSourcePad = new MatTableDataSource();
+  dataSourceAlu = new MatTableDataSource();
   configColumnsMat = [];
   configColumnsPad = [];
   configColumnsAlu = [];
@@ -60,7 +60,9 @@ export class ProfileComponent implements OnInit {
     this.userLE = JSON.parse(localStorage.getItem('user'));
     this.ram = this.getRandomArbitrary(1, 9);
     this.usuarioSendImage.email = this.userLE !== null ? this.userLE.email : null;
-    this.imageEnc = (this.userLE !== null && typeof this.userLE !== 'undefined') ? ((this.userLE.photo !== null && typeof this.userLE.photo !== 'undefined') ? this.userLE.photo : '') : '';
+    this.imageEnc = (this.userLE !== null && typeof this.userLE !== 'undefined') ?
+    ((this.userLE.photo !== null && typeof this.userLE.photo !== 'undefined')
+    ? this.userLE.photo : '') : '';
     this.usuarioSend.nombre = this.userLE !== null ? this.userLE.nombre : 'Usuario';
     this.usuarioSend.email = this.userLE !== null ? this.userLE.email : 'email';
     this.usuarioSend.tipoUsuario = this.userLE !== null ? this.userLE.tipoUsuario : new TiposUsuarios();
@@ -116,7 +118,7 @@ export class ProfileComponent implements OnInit {
               ]
             });
           });
-          this.dataSourceMat = new MatTableDataSource(this.materiasArray);
+          this.dataSourceMat.data = this.materiasArray;
         },
         error => {
           this.isLoadingMat = false;
@@ -144,7 +146,7 @@ export class ProfileComponent implements OnInit {
               ]
             });
           });
-          this.dataSourcePad = new MatTableDataSource(this.padresArray);
+          this.dataSourcePad.data = this.padresArray;
         },
         error => {
           this.isLoadingPad = false;
@@ -172,7 +174,7 @@ export class ProfileComponent implements OnInit {
               ]
             });
           });
-          this.dataSourceAlu = new MatTableDataSource(this.alumnosArray);
+          this.dataSourceAlu.data = this.alumnosArray;
         },
         error => {
           this.isLoadingAlu = false;

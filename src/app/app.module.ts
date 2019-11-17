@@ -1,6 +1,5 @@
 import { ProfileComponent } from './_components/pages/profile/profile.component';
 import { ResourcesComponent } from './_components/pages/resources/resources.component';
-import { ActivitiesComponent } from './_components/pages/activities/activities.component';
 import { ForumComponent } from './_components/pages/forum/forum.component';
 import { DashboardComponent } from './_components/pages/dashboard/dashboard.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,6 +12,7 @@ import { LoginComponent } from './_components/pages/login/login.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import {
   MatToolbarModule,
   MatButtonModule,
@@ -45,6 +45,8 @@ import { DialogComponent } from './_components/util/dialog/dialog.component';
 import { AddMateriasComponent } from './_components/pages/profile/dialog/addMaterias/add-materias.component';
 import { AddPadresComponent } from './_components/pages/profile/dialog/addPadres/add-padres.component';
 import { AddAlumnosComponent } from './_components/pages/profile/dialog/addAlumnos/add-alumnos.component';
+import { AcademicManagementComponent } from './_components/pages/academicManagement/academicManagement.component';
+import { CrudMateriasComponent } from './_components/pages/academicManagement/dialog/crudMaterias/crudMaterias.component';
 
 @NgModule({
   declarations: [
@@ -57,13 +59,14 @@ import { AddAlumnosComponent } from './_components/pages/profile/dialog/addAlumn
     LoadingComponent,
     DashboardComponent,
     ForumComponent,
-    ActivitiesComponent,
     ResourcesComponent,
     ProfileComponent,
     DialogComponent,
     AddMateriasComponent,
     AddPadresComponent,
-    AddAlumnosComponent
+    AddAlumnosComponent,
+    CrudMateriasComponent,
+    AcademicManagementComponent,
   ],
   entryComponents: [
     SnackBarComponent,
@@ -71,10 +74,11 @@ import { AddAlumnosComponent } from './_components/pages/profile/dialog/addAlumn
     TableComponent,
     AddMateriasComponent,
     AddPadresComponent,
-    AddAlumnosComponent
+    AddAlumnosComponent,
+    CrudMateriasComponent
   ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
     MatCardModule,
@@ -97,6 +101,7 @@ import { AddAlumnosComponent } from './_components/pages/profile/dialog/addAlumn
     MatDialogModule,
     HttpClientModule,
     NgbModule,
+    PdfViewerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {
