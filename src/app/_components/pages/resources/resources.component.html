@@ -90,10 +90,10 @@
             </div>
             <div class="optionsChannelResources">
               <mat-form-field>
-                <mat-label>Tema</mat-label>
-                <mat-select>
-                  <mat-option *ngFor="let food of foods" [value]="food.value">
-                    {{food.viewValue}}
+                <mat-label>Actividad</mat-label>
+                <mat-select (selectionChange)="onChangeActivity($event.value)" [(ngModel)]="selectedActivity">
+                  <mat-option *ngFor="let activity of activities" [value]="activity.idActividad">
+                    {{activity.nombre}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -102,25 +102,39 @@
         </div>
         <div class="downResources">
           <div class="upPrincipal">
-            <div class="areaResource centrar">
+            <div class="centrar" style="margin-top: 20px" *ngIf="activities.length == 0">
+                No hay una actividad seleccionada
+            </div>
+            <div *ngIf="activities.length > 0" class="areaResource centrar">
+                <div class="areaPdfRep" *ngIf="resourceActive == 'pdf'">
+                    <iframe [src]="getIframe(urlPrin)"></iframe>
+                  </div>
               <div class="areaTextoRep" *ngIf="resourceActive == 'texto'">
-                <div class="readText">
-                  {{textRep}}
+                <div [innerHTML]="textRep" class="readText">
+
                 </div>
               </div>
               <div class="areaAudioRep" *ngIf="resourceActive == 'audio'">
-                <div *ngIf="urlAudio !== ''">
-                  <iframe [src]="getVideoIframe(urlAudio)"></iframe>
+                <div *ngIf="urlAlt !== ''">
+                  <iframe [src]="getIframe(urlAlt)"></iframe>
                 </div>
-                <div *ngIf="urlAudio === ''">
+                <div *ngIf="urlAlt === ''">
                   Seleccione un tema por favor
                 </div>
               </div>
               <div class="areaVideoRep" *ngIf="resourceActive == 'video'">
-                <div *ngIf="urlVideo !== ''">
-                  <iframe [src]="getVideoIframe(urlVideo)"></iframe>
+                <div *ngIf="urlPrin !== ''">
+                  <iframe [src]="getIframe(urlPrin)"></iframe>
                 </div>
-                <div *ngIf="urlVideo === ''">
+                <div *ngIf="urlPrin === ''">
+                  Seleccione un tema por favor
+                </div>
+              </div>
+              <div class="areaDinamicaRep" *ngIf="resourceActive == 'dinamica'">
+                <div *ngIf="urlPrin !== ''">
+                  <iframe [src]="getIframe(urlPrin)"></iframe>
+                </div>
+                <div *ngIf="urlPrin === ''">
                   Seleccione un tema por favor
                 </div>
               </div>
@@ -128,22 +142,28 @@
           </div>
           <div class="downPrincipal">
             <div class="areaUx">
-              <div class="areaVideo centrar" *ngIf="resourceActive == 'texto' || resourceActive == 'audio'">
+              <div class="areaVideo centrar" *ngIf="(resourceActive == 'texto' || resourceActive == 'audio') && resourceType == 'video'">
                   <button style="margin: auto;" (click)="viewPanwl('video')"
                   mat-raised-button color="primary">
                   <i class="fas fa-video"></i> Ver video
                 </button>
               </div>
-              <div class="areaAudio centrar" *ngIf="resourceActive == 'texto' || resourceActive == 'video'">
+              <div class="areaAudio centrar" *ngIf="resourceActive == 'texto' || resourceActive == 'pdf' || resourceActive == 'video'">
                 <button style="margin: auto;" (click)="viewPanwl('audio')"
                   mat-raised-button color="primary">
-                  <i class="fas fa-headphones-alt"></i> Escuchar recurso
+                  <i class="fas fa-headphones-alt"></i> Escuchar audio
                 </button>
               </div>
-              <div class="areaTexto centrar" *ngIf="resourceActive == 'video' || resourceActive == 'audio'">
+              <div class="areaTexto centrar" *ngIf="resourceActive == 'video' || resourceActive == 'pdf' || resourceActive == 'audio'">
                   <button style="margin: auto;" (click)="viewPanwl('texto')"
                   mat-raised-button color="primary">
-                  <i class="fas fa-book"></i> Leer recurso
+                  <i class="fas fa-book"></i> Leer texto
+                </button>
+              </div>
+              <div class="areaPdf centrar" *ngIf="(resourceActive == 'texto' || resourceActive == 'audio') && resourceType == 'pdf'">
+                  <button style="margin: auto;" (click)="viewPanwl('pdf')"
+                  mat-raised-button color="primary">
+                  <i class="fas fa-file-pdf"></i> ver PDF
                 </button>
               </div>
             </div>

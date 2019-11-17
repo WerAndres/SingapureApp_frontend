@@ -31,3 +31,7 @@ export interface TemasData {
   acciones: [ActionsTable];
 }
 
+export interface Activities {
+  idActividad: string;
+  nombre: string;
+}
