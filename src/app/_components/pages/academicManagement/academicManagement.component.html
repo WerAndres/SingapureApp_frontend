@@ -1,0 +1,48 @@
+<div class="containerPage">
+  <div class="titlePage">Gestión académica</div>
+    <app-loading class="centrar" *ngIf="isLoading"></app-loading>
+    <div  *ngIf="!isLoading" class="profileInfo col-md-12">
+      <mat-accordion>
+        <mat-expansion-panel *ngIf="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fas fa-concierge-bell"></i> Cursos
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-table #tablaCursos (onSuggest)="clickActionCur($event[0], $event[1])" [dataSource]="dataSourceCur"
+            [isLoading]="isLoadingCur" [configColumns]="configColumnsCur" [generalConfig]="generalConfigCur"></app-table>
+         </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fas fa-book-open"></i> Materias
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+                <i class="fas fa-sitemap"></i> Temas
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+                <i class="fas fa-bolt"></i> Recursos didácticos
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+<div>

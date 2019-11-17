@@ -9,6 +9,8 @@ import { Temas } from 'src/app/_models/Temas';
 import { InteraccionesService } from 'src/app/_services/utils/interacciones.service';
 import { Interacciones } from 'src/app/_models/Interacciones';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActividadesService } from 'src/app/_services/utils/actividades.service';
+import { Activities } from '../../util/interfaces/util-interfaces';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -18,11 +20,6 @@ export class SafePipe implements PipeTransform {
   }
 }
 
-export interface Food {
-  value: string;
-  viewValue: string;
-}
-
 @Component({
   selector: 'app-resources',
   templateUrl: './resources.component.html',
@@ -30,6 +27,7 @@ export interface Food {
 })
 export class ResourcesComponent implements OnInit {
   titleClass = 'Clase';
+  titleClassOld = 'Clase';
   openListMat = false;
   ram: any = 1;
   itemActiveMsg: any;
@@ -49,19 +47,18 @@ export class ResourcesComponent implements OnInit {
   screenWidth: any = 0;
   messageInput = '';
   intSend: Interacciones;
-  urlVideo = 'https://drive.google.com/file/d/1qJ2eccfnGwU0WI_xo_hmz5RtoaZ2YN_O/preview';
-  urlAudio = 'https://drive.google.com/file/d/1-UxpIBAPQg59OyQUUrdU-vWrPr58kgop/preview';
-  textRep = 'mucho texto';
-  resourceActive = 'video';
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
+  urlPrin: any = '';
+  urlAlt: any = '';
+  textRep: any = '';
+  resourceActive: any = '';
+  resourceType: any = '';
+  activities: Activities[] = [];
+  listAct = {};
+  selectedActivity: any;
   constructor(
     private router: Router,
     private temasService: TemasService,
-    private interaccionesService: InteraccionesService,
+    private actividadesService: ActividadesService,
     // tslint:disable-next-line:variable-name
     private _sanitizer: DomSanitizer,
     public snackBar: MatSnackBar
@@ -100,6 +97,7 @@ export class ResourcesComponent implements OnInit {
         // console.log('----->' + JSON.stringify(this.listMatPadAlum));
         this.listMat = {};
         this.listMatDef = [];
+        this.selectedActivity = 0;
         this.listMatPadAlum.forEach(element => {
           if (typeof this.listMat[element.materia.idMateria] !== 'undefined') {
             this.listMat[element.materia.idMateria].temasObj[element.idTema] = { idTema: element.idTema, nombre: element.nombre };
@@ -167,25 +165,26 @@ export class ResourcesComponent implements OnInit {
     this.screenWidth = window.innerWidth;
   }
   clickItemChannel(item) {
-    // console.log(JSON.stringify(item))
-    this.activeInput = true;
+    console.log(JSON.stringify(item));
+    this.isLoadingMat = true;
     this.titleClass = item.nombre;
-    this.isLoadingMesg = true;
-    this.interaccionesService.getAllFilterTema(item.idTema).subscribe(
+    this.titleClassOld = item.nombre;
+    this.actividadesService.getAllFilterTema(item.idTema).subscribe(
       resp => {
-        this.itemActiveMsg = item;
-        this.isLoadingMesg = false;
-        this.listMessage = resp.bussinesData;
-        this.listMsgDef = [];
-        this.listMessage.forEach(element => {
-          this.listMsgDef.push({idUsuario: element.usuario.idUsuario, nombreUsuario: element.usuario.nombre,
-            urlUser: typeof element.usuario.photo !== 'undefined' ? element.usuario.photo : '', msg: element.mensaje,
-            nombreTipoUsuario: element.usuario.tipoUsuario.nombre,
-            prop: element.usuario.email === this.userLE.email ? true : false});
+        this.isLoadingMat = false;
+        // console.log('resp: ' + JSON.stringify(resp))
+        this.activities = [];
+        resp.bussinesData.forEach(element => {
+          this.activities.push({idActividad: element.idActividad, nombre: element.nombre});
+          this.listAct[element.idActividad] = element;
         });
+        if (this.activities.length > 0) {
+          this.selectedActivity = 1;
+          this.onChangeActivity(this.activities[0].idActividad);
+        }
       },
       error => {
-        this.isLoadingMesg = false;
+        this.isLoadingMat = false;
         this.snack.elements = error;
         this.snack.elements.title = null;
         this.snack.elements.message = null;
@@ -198,7 +197,7 @@ export class ResourcesComponent implements OnInit {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-  getVideoIframe(url: any) {
+  getIframe(url: any) {
     let video;
     let results;
     if (url === null) {
@@ -208,8 +207,19 @@ export class ResourcesComponent implements OnInit {
     video   = (results === null) ? url : results[1];
     return this._sanitizer.bypassSecurityTrustResourceUrl(video);
   }
-  viewPanwl(opt){
+  viewPanwl(opt: any) {
     this.resourceActive = opt;
   }
-
+  onChangeActivity(item: any) {
+    // console.log(JSON.stringify(item));
+    this.selectedActivity = item;
+    this.titleClass = this.titleClassOld + ' - ' + this.listAct[item].nombre;
+    this.resourceType = this.listAct[item].tiposActividades.nombre === 'multimedia' ? 'video' :
+    (this.listAct[item].tiposActividades.nombre === 'pdf' ? 'pdf'
+    : (this.listAct[item].tiposActividades.nombre === 'dinamica' ? 'dinamica' : '')) ;
+    this.resourceActive = this.resourceType;
+    this.urlPrin = this.listAct[item].urlPrincipal;
+    this.urlAlt = this.listAct[item].urlAlternativa;
+    this.textRep = this.listAct[item].texto;
+  }
 }

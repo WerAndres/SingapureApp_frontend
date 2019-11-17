@@ -17,6 +17,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @Input() dataSource: MatTableDataSource<any>;
+  oldDataSource: MatTableDataSource<any>;
   // tslint:disable-next-line: no-output-on-prefix
   @Output() onSuggest: EventEmitter<any> = new EventEmitter();
 
@@ -25,7 +26,7 @@ export class TableComponent implements AfterViewInit, OnInit {
       // tslint:disable-next-line: no-string-literal
       this.displayedColumns.push(element['value']);
     });
-    this.paginatorFun();
+    this.oldDataSource = this.dataSource;
   }
 
   ngAfterViewInit() {
@@ -45,12 +46,11 @@ export class TableComponent implements AfterViewInit, OnInit {
     }
   }
 
-  clickAction(item, action): void {
+  clickAction(item: any, action: any): void {
     this.onSuggest.emit([item, action]);
   }
 
-  onChangeLength(data) {
-    this.paginatorFun();
+  onChangeLength(data: any) {
     return this.dataSource.data.length;
   }
 
