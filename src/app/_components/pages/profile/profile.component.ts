@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material';
 import { SnackModel } from './../../../_models/SnackModel';
 import { UsuariosService } from './../../../_services/utils/usuarios.service';
 import { Usuarios } from './../../../_models/Usuarios';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TiposUsuarios } from '../../../_models/TiposUsuarios';
 import { MatTableDataSource } from '@angular/material/table';
 import { UsuariosMateriasService } from 'src/app/_services/utils/usuariosMaterias.service';
@@ -14,6 +14,7 @@ import { AddMateriasComponent } from './dialog/addMaterias/add-materias.componen
 import { PadresAlumnosService } from 'src/app/_services/utils/padresAlumnos.service';
 import { AddPadresComponent } from './dialog/addPadres/add-padres.component';
 import { AddAlumnosComponent } from './dialog/addAlumnos/add-alumnos.component';
+import { TableComponent } from '../../util/table-component/table.component';
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +41,9 @@ export class ProfileComponent implements OnInit {
   dataSourceMat = new MatTableDataSource();
   dataSourcePad = new MatTableDataSource();
   dataSourceAlu = new MatTableDataSource();
+  @ViewChild('tablaMaterias', {static: false}) tablaMaterias: TableComponent;
+  @ViewChild('tablaPadres', {static: false}) tablaPadres: TableComponent;
+  @ViewChild('tablaAlumnos', {static: false}) tablaAlumnos: TableComponent;
   configColumnsMat = [];
   configColumnsPad = [];
   configColumnsAlu = [];
@@ -107,6 +111,7 @@ export class ProfileComponent implements OnInit {
     const rol = this.userLE.tipoUsuario.nombre;
     if (rol === 'Alumno' || rol === 'Profesor') {
       this.isLoadingMat = true;
+      this.dataSourceMat = new MatTableDataSource();
       this.usuariosMateriasService.getByEmail(this.usuarioSend.email).subscribe(
         resp => {
           this.isLoadingMat = false;
@@ -119,6 +124,7 @@ export class ProfileComponent implements OnInit {
             });
           });
           this.dataSourceMat.data = this.materiasArray;
+          this.tablaMaterias.paginatorFun();
         },
         error => {
           this.isLoadingMat = false;
@@ -135,6 +141,7 @@ export class ProfileComponent implements OnInit {
     const rol = this.userLE.tipoUsuario.nombre;
     if (rol === 'Alumno') {
       this.isLoadingPad = true;
+      this.dataSourcePad = new MatTableDataSource();
       this.padresAlumnosService.getByEmail(this.userLE.email, rol).subscribe(
         resp => {
           this.isLoadingPad = false;
@@ -147,6 +154,7 @@ export class ProfileComponent implements OnInit {
             });
           });
           this.dataSourcePad.data = this.padresArray;
+          this.tablaPadres.paginatorFun();
         },
         error => {
           this.isLoadingPad = false;
@@ -163,6 +171,7 @@ export class ProfileComponent implements OnInit {
     const rol = this.userLE.tipoUsuario.nombre;
     if (rol === 'Padre') {
       this.isLoadingAlu = true;
+      this.dataSourceAlu = new MatTableDataSource();
       this.padresAlumnosService.getByEmail(this.userLE.email, rol).subscribe(
         resp => {
           this.isLoadingAlu = false;
@@ -175,6 +184,7 @@ export class ProfileComponent implements OnInit {
             });
           });
           this.dataSourceAlu.data = this.alumnosArray;
+          this.tablaAlumnos.paginatorFun();
         },
         error => {
           this.isLoadingAlu = false;
