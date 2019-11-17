@@ -79,7 +79,7 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-table (onSuggest)="clickActionMat($event[0], $event[1])" [dataSource]="dataSourceMat"
+        <app-table #tablaMaterias (onSuggest)="clickActionMat($event[0], $event[1])" [dataSource]="dataSourceMat"
             [isLoading]="isLoadingMat" [configColumns]="configColumnsMat" [generalConfig]="generalConfigMat"></app-table>
       </mat-expansion-panel>
       <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Alumno'">
@@ -90,7 +90,7 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-table (onSuggest)="clickActionPad($event[0], $event[1])" [dataSource]="dataSourcePad"
+        <app-table #tablaPadres (onSuggest)="clickActionPad($event[0], $event[1])" [dataSource]="dataSourcePad"
           [isLoading]="isLoadingPad" [configColumns]="configColumnsPad" [generalConfig]="generalConfigPad"></app-table>
       </mat-expansion-panel>
       <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Padre'">
@@ -101,7 +101,7 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-table (onSuggest)="clickActionAlu($event[0], $event[1])" [dataSource]="dataSourceAlu"
+        <app-table #tablaAlumnos (onSuggest)="clickActionAlu($event[0], $event[1])" [dataSource]="dataSourceAlu"
           [isLoading]="isLoadingAlu" [configColumns]="configColumnsAlu" [generalConfig]="generalConfigAlu"></app-table>
       </mat-expansion-panel>
     </mat-accordion>
