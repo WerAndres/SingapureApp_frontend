@@ -44,7 +44,8 @@
             <mat-panel-description>
             </mat-panel-description>
           </mat-expansion-panel-header>
-
+          <app-table #tablaActividades (onSuggest)="clickActionAct($event[0], $event[1])" [dataSource]="dataSourceAct"
+          [isLoading]="isLoadingAct" [configColumns]="configColumnsAct" [generalConfig]="generalConfigAct"></app-table>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
