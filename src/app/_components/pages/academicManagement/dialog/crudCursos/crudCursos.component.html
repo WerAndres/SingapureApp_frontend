@@ -1,0 +1,10 @@
+<app-loading class="centrar" *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading">
+  <mat-form-field style='width: 100%'>
+    <input matInput placeholder="Nombre de curso" [(ngModel)]="nombreCurso">
+  </mat-form-field>
+  <button (click)="clickButton()"
+    mat-raised-button color="primary">
+    <i class="fas fa-save"></i> Guardar
+  </button>
+</div>

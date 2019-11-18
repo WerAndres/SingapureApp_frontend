@@ -23,12 +23,12 @@ export class AppComponent implements OnInit {
   widthImg: any;
   userLE: Usuarios;
   menuItems: any = [
-    {name: 'Dashboard', active: false, icon: 'fas fa-th', route: '/dashboard'},
-    {name: 'Perfil', active: false, icon: 'fas fa-user', route: '/profile'},
-    {name: 'Gestión academica', active: false, icon: 'fas fa-tasks', route: '/academicManagment'},
-    {name: 'Foro', active: false, icon: 'fas fa-comments', route: '/forum'},
-    {name: 'Recursos didácticos', active: false, icon: 'fas fa-bolt', route: '/resources'},
-    {name: 'Salir', active: false, icon: 'fas fa-sign-out-alt', route: '/login'},
+    {name: 'Dashboard', active: false, icon: 'fas fa-th', route: '/dashboard', roles: ['Padre', 'Alumno', 'Profesor']},
+    {name: 'Perfil', active: false, icon: 'fas fa-user', route: '/profile', roles: ['Padre', 'Alumno', 'Profesor']},
+    {name: 'Gestión academica', active: false, icon: 'fas fa-tasks', route: '/academicManagment', roles: ['Profesor']},
+    {name: 'Foro', active: false, icon: 'fas fa-comments', route: '/forum', roles: ['Padre', 'Alumno', 'Profesor']},
+    {name: 'Recursos didácticos', active: false, icon: 'fas fa-bolt', route: '/resources', roles: ['Padre', 'Alumno', 'Profesor']},
+    {name: 'Salir', active: false, icon: 'fas fa-sign-out-alt', route: '/login', roles: ['Padre', 'Alumno', 'Profesor']},
   ];
   constructor(private router: Router, private route: ActivatedRoute) {
     router.events.subscribe((val) => {
@@ -91,6 +91,9 @@ export class AppComponent implements OnInit {
       this.heigthImg = height;
       this.widthImg = width;
     }
+  }
+  roleActiveMenu(arrayRole: any){
+    return arrayRole.includes(this.userLE.tipoUsuario.nombre);
   }
 }
 
