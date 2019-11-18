@@ -22,6 +22,8 @@
             <mat-panel-description>
             </mat-panel-description>
           </mat-expansion-panel-header>
+          <app-table #tablaMaterias (onSuggest)="clickActionMat($event[0], $event[1])" [dataSource]="dataSourceMat"
+            [isLoading]="isLoadingMat" [configColumns]="configColumnsMat" [generalConfig]="generalConfigMat"></app-table>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf="true">
           <mat-expansion-panel-header>
@@ -31,6 +33,8 @@
             <mat-panel-description>
             </mat-panel-description>
           </mat-expansion-panel-header>
+          <app-table #tablaTemas (onSuggest)="clickActionTem($event[0], $event[1])" [dataSource]="dataSourceTem"
+            [isLoading]="isLoadingTem" [configColumns]="configColumnsTem" [generalConfig]="generalConfigTem"></app-table>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf="true">
           <mat-expansion-panel-header>

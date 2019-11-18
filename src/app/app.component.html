@@ -22,7 +22,7 @@
       </mat-card>
       <mat-card class="menuBarBottom">
         <div class="menuList" *ngFor="let menuItem of menuItems">
-            <div [class]="menuItem.active ? 'munuItem active' : 'munuItem'" (click)="activeBar(menuItem)" >
+            <div *ngIf="roleActiveMenu(menuItem.roles)" [class]="menuItem.active ? 'munuItem active' : 'munuItem'" (click)="activeBar(menuItem)" >
                 <i [class]="menuItem.icon"></i>
                 <div class="munuItemText">{{menuItem.name}}</div>
             </div>

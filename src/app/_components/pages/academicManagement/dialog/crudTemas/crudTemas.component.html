@@ -1,12 +1,12 @@
 <app-loading class="centrar" *ngIf="isLoading"></app-loading>
 <div *ngIf="!isLoading">
   <mat-form-field style='width: 100%'>
-    <input matInput placeholder="Nombre de materia" [(ngModel)]="nombreMateria">
+    <input matInput placeholder="Nombre de tema" [(ngModel)]="nombreTema">
   </mat-form-field>
   <mat-form-field style='width: 100%'>
-    <mat-select placeholder="Curso" [(ngModel)]="cursoSelectId">
-      <mat-option *ngFor="let curso of cursosArray" [value]="curso.idCurso">
-        {{curso.nombre}}
+    <mat-select placeholder="Materia" [(ngModel)]="materiaSelectId">
+      <mat-option *ngFor="let materia of materiasArray" [value]="materia.idMateria">
+        {{materia.nombre}} - {{materia.curso.nombre}}
       </mat-option>
     </mat-select>
   </mat-form-field>

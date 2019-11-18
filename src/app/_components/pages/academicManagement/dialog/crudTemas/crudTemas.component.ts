@@ -1,66 +1,66 @@
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogData } from './../../../../util/dialog/dialog.component';
+import { DialogData } from '../../../../util/dialog/dialog.component';
 import { Component, OnInit, Inject } from '@angular/core';
 import { SnackModel } from 'src/app/_models/SnackModel';
 import { Usuarios } from 'src/app/_models/Usuarios';
 import { SnackBarComponent } from 'src/app/_components/util/snack-bar-component/snack-bar.component';
 import { MatSnackBar } from '@angular/material';
-import { CursosService } from 'src/app/_services/utils/cursos.service';
-import { Materias } from 'src/app/_models/Materias';
 import { MateriasService } from 'src/app/_services/utils/materias.service';
-import { Cursos } from 'src/app/_models/Cursos';
+import { Temas } from 'src/app/_models/Temas';
+import { TemasService } from 'src/app/_services/utils/temas.service';
+import { Materias } from 'src/app/_models/Materias';
 
 
 @Component({
-  selector: 'app-crud-materias',
-  templateUrl: './crudMaterias.component.html',
+  selector: 'app-crud-temas',
+  templateUrl: './crudTemas.component.html',
   styleUrls: ['../../academicManagement.component.scss']
 })
-export class CrudMateriasComponent implements OnInit {
-  materiaSend: Materias;
+export class CrudTemasComponent implements OnInit {
+  temaSend: Temas;
   snack: SnackModel = new SnackModel();
   isLoading = false;
   userLE: Usuarios;
-  nombreMateria = 'nombreMateria';
-  cursosArray = [];
-  cursoSelectId: any;
+  nombreTema = 'nombreTema';
+  materiasArray = [];
+  materiaSelectId: any;
   typeCrud = '';
   constructor(
     public snackBar: MatSnackBar,
-    private cursosServices: CursosService,
     private materiasServices: MateriasService,
+    private temasServices: TemasService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 
   ngOnInit() {
     this.userLE = JSON.parse(localStorage.getItem('user'));
     // console.log(JSON.stringify(this.data));
-    this.nombreMateria = '';
-    this.getCursos();
+    this.nombreTema = '';
+    this.getMaterias();
     // tslint:disable-next-line: no-string-literal
     this.typeCrud = this.data['type'];
     if (this.typeCrud === 'update') {
       // tslint:disable-next-line: no-string-literal
-      this.nombreMateria = this.data['item'].materia;
+      this.nombreTema = this.data['item'].tema;
     }
   }
-  updateMateria() {
+  updateTema() {
     this.isLoading = true;
-    this.materiaSend = new Materias();
+    this.temaSend = new Temas();
     // tslint:disable-next-line: no-string-literal
-    this.materiaSend.idMateria = this.data['item'].id;
-    this.materiaSend.curso = new Cursos();
+    this.temaSend.idTema = this.data['item'].id;
+    this.temaSend.materia = new Materias();
     // tslint:disable-next-line: no-string-literal
-    this.materiaSend.curso.idCurso = this.cursoSelectId;
+    this.temaSend.materia.idMateria = this.materiaSelectId;
     // tslint:disable-next-line: no-string-literal
-    this.materiaSend.nombre = this.nombreMateria;
-    if (this.materiaSend.nombre !== '') {
-      if (this.cursoSelectId !== null && typeof this.cursoSelectId !== 'undefined' && this.cursoSelectId !== '') {
-        this.materiasServices.update(this.materiaSend).subscribe(
+    this.temaSend.nombre = this.nombreTema;
+    if (this.temaSend.nombre !== '') {
+      if (this.materiaSelectId !== null && typeof this.materiaSelectId !== 'undefined' && this.materiaSelectId !== '') {
+        this.temasServices.update(this.temaSend).subscribe(
           resp => {
             this.isLoading = false;
             this.snack.elements = {};
-            this.snack.elements.title = 'Actulizar materia';
+            this.snack.elements.title = 'Actulizar tema';
             this.snack.elements.message = 'Exitoso';
             this.snack.type = 'ok';
             this.snack.icon = null;
@@ -79,7 +79,7 @@ export class CrudMateriasComponent implements OnInit {
         this.isLoading = false;
         this.snack.elements = {};
         this.snack.elements.title = 'Error - validación';
-        this.snack.elements.message = 'El campo curso esta vacío';
+        this.snack.elements.message = 'El campo materia esta vacío';
         this.snack.type = 'error';
         this.snack.icon = null;
         this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
@@ -88,36 +88,36 @@ export class CrudMateriasComponent implements OnInit {
       this.isLoading = false;
       this.snack.elements = {};
       this.snack.elements.title = 'Error - validación';
-      this.snack.elements.message = 'El campo nombre de materia esta vacío';
+      this.snack.elements.message = 'El campo nombre de tema esta vacío';
       this.snack.type = 'error';
       this.snack.icon = null;
       this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
     }
   }
-  createMateria() {
+  createTema() {
     this.isLoading = true;
-    this.materiaSend = new Materias();
-    // tslint:disable-next-line: no-string-literal
+    this.temaSend = new Temas();
     if (this.typeCrud === 'update') {
-      this.materiaSend.idMateria = this.data['item'].id;
+      // tslint:disable-next-line: no-string-literal
+      this.temaSend.idTema = this.data['item'].id;
     }
-    this.materiaSend.curso = new Cursos();
+    this.temaSend.materia = new Materias();
     // tslint:disable-next-line: no-string-literal
-    this.materiaSend.curso.idCurso = this.cursoSelectId;
+    this.temaSend.materia.idMateria = this.materiaSelectId;
     // tslint:disable-next-line: no-string-literal
-    this.materiaSend.nombre = this.nombreMateria;
-    if (this.materiaSend.nombre !== '') {
-      if (this.cursoSelectId !== null && typeof this.cursoSelectId !== 'undefined' && this.cursoSelectId !== '') {
-        this.materiasServices.create(this.materiaSend).subscribe(
+    this.temaSend.nombre = this.nombreTema;
+    if (this.temaSend.nombre !== '') {
+      if (this.materiaSelectId !== null && typeof this.materiaSelectId !== 'undefined' && this.materiaSelectId !== '') {
+        this.temasServices.create(this.temaSend).subscribe(
           resp => {
             this.isLoading = false;
             this.snack.elements = {};
-            this.nombreMateria = '';
-            this.snack.elements.title = 'Crear materia';
+            this.nombreTema = '';
+            this.snack.elements.title = 'Crear tema';
             this.snack.elements.message = 'Exitoso';
             this.snack.type = 'ok';
             this.snack.icon = null;
-            this.cursoSelectId = '';
+            this.materiaSelectId = '';
             this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
           },
           error => {
@@ -133,7 +133,7 @@ export class CrudMateriasComponent implements OnInit {
         this.isLoading = false;
         this.snack.elements = {};
         this.snack.elements.title = 'Error - validación';
-        this.snack.elements.message = 'El campo curso esta vacío';
+        this.snack.elements.message = 'El campo materia esta vacío';
         this.snack.type = 'error';
         this.snack.icon = null;
         this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
@@ -142,7 +142,7 @@ export class CrudMateriasComponent implements OnInit {
       this.isLoading = false;
       this.snack.elements = {};
       this.snack.elements.title = 'Error - validación';
-      this.snack.elements.message = 'El campo nombre de materia esta vacío';
+      this.snack.elements.message = 'El campo nombre de tema esta vacío';
       this.snack.type = 'error';
       this.snack.icon = null;
       this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
@@ -150,19 +150,19 @@ export class CrudMateriasComponent implements OnInit {
   }
   clickButton() {
     if (this.typeCrud === 'create') {
-      this.createMateria();
+      this.createTema();
     } else if (this.typeCrud === 'update') {
-      this.updateMateria();
+      this.updateTema();
     }
   }
-  getCursos() {
+  getMaterias() {
     this.isLoading = true;
-    this.cursosServices.getAll().subscribe(
+    this.materiasServices.getAll().subscribe(
       resp => {
         this.isLoading = false;
-        this.cursosArray = resp.bussinesData;
+        this.materiasArray = resp.bussinesData;
         if (this.typeCrud === 'update') {        // tslint:disable-next-line: no-string-literal
-          this.cursoSelectId = this.data['item'].idCurso;
+          this.materiaSelectId = this.data['item'].idMateria;
         }
       },
       error => {
