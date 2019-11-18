@@ -12,6 +12,8 @@ import { MateriasService } from 'src/app/_services/utils/materias.service';
 import { CrudMateriasComponent } from './dialog/crudMaterias/crudMaterias.component';
 import { TemasService } from 'src/app/_services/utils/temas.service';
 import { CrudTemasComponent } from './dialog/crudTemas/crudTemas.component';
+import { ActividadesService } from 'src/app/_services/utils/actividades.service';
+import { CrudActividadesComponent } from './dialog/crudActividades/crudActividades.component';
 
 @Component({
   selector: 'app-academic-management',
@@ -24,6 +26,7 @@ export class AcademicManagementComponent implements OnInit {
   @ViewChild('tablaCursos', {static: false}) tablaCursos: TableComponent;
   @ViewChild('tablaMaterias', {static: false}) tablaMaterias: TableComponent;
   @ViewChild('tablaTemas', {static: false}) tablaTemas: TableComponent;
+  @ViewChild('tablaActividades', {static: false}) tablaActividades: TableComponent;
 
   isLoading = false;
 
@@ -45,10 +48,17 @@ export class AcademicManagementComponent implements OnInit {
   isLoadingTem = false;
   generalConfigTem: any;
 
+  actividadesArray = [];
+  dataSourceAct = new MatTableDataSource();
+  configColumnsAct = [];
+  isLoadingAct = false;
+  generalConfigAct: any;
+
   constructor(
     private cursosService: CursosService,
     private materiasService: MateriasService,
     private temasService: TemasService,
+    private actividadesService: ActividadesService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog
   ) { }
@@ -86,6 +96,17 @@ export class AcademicManagementComponent implements OnInit {
       activeAddItem: true
     };
     this.getTemas();
+
+    this.configColumnsAct = [
+      { value: 'actividad' , title: 'Actividad', action: false},
+      { value: 'tema_materia_curso' , title: 'Tema - Materia - Curso', action: false},
+      { value: 'acciones' , title: 'Accciones', action: true}
+    ];
+    this.generalConfigAct = {
+      titleAdd: 'Crear Recurso didáctico',
+      activeAddItem: true
+    };
+    this.getActividades();
 
   }
   getCursos() {
@@ -163,6 +184,37 @@ export class AcademicManagementComponent implements OnInit {
         });
         this.dataSourceTem.data = this.temasArray;
         this.tablaTemas.paginatorFun();
+      },
+      error => {
+        this.isLoadingTem = false;
+        this.snack.elements = error;
+        this.snack.elements.title = null;
+        this.snack.elements.message = null;
+        this.snack.type = 'error';
+        this.snack.icon = null;
+        this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+    });
+  }
+
+  getActividades() {
+    this.isLoadingAct = true;
+    this.dataSourceAct = new MatTableDataSource();
+    this.actividadesService.getAll().subscribe(
+      resp => {
+        this.isLoadingAct = false;
+        this.actividadesArray = [];
+        resp.bussinesData.forEach(element => {
+          this.actividadesArray.push({id: element.idActividad, actividad: element.nombre, idTema: element.tema.idTema,
+            tema_materia_curso: element.tema.nombre + ' - ' + element.tema.materia.nombre + ' - ' + element.tema.materia.curso.nombre,
+            idMateria: element.tema.materia.idMateria, idCurso: element.tema.materia.curso.idCurso, urlPrin: element.urlPrincipal,
+            urlSecu: element.urlAlternativa, textoSend: element.texto, idTipoActividad: element.tiposActividades.idTipoActividad,
+            acciones: [
+              {icon: 'fas fa-edit', name: 'Editar', click: 'edit', colorClass: 'primary'},
+            ]
+          });
+        });
+        this.dataSourceAct.data = this.actividadesArray;
+        this.tablaActividades.paginatorFun();
       },
       error => {
         this.isLoadingTem = false;
@@ -253,6 +305,33 @@ export class AcademicManagementComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.getTemas();
+    });
+  }
+
+  clickActionAct(item: any, action: any) {
+    if (action === 'edit') {
+     this.openEditDialogAct(item);
+    }
+    if (action === 'add') {
+     this.openCreateDialogAct();
+    }
+  }
+  openEditDialogAct(data: any): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      data: { component: CrudActividadesComponent, title: 'Gestionar recursos didácticos', type: 'update', item: data}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getActividades();
+    });
+  }
+  openCreateDialogAct(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      data: { component: CrudActividadesComponent, type: 'create', title: 'Gestionar recursos didácticos'}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getActividades();
     });
   }
 

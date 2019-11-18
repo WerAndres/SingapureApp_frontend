@@ -1,0 +1,33 @@
+<app-loading class="centrar" *ngIf="isLoading"></app-loading>
+<div *ngIf="!isLoading">
+  <mat-form-field style='width: 100%'>
+    <input matInput placeholder="Nombre de recurso didáctico" [(ngModel)]="nombreActividad">
+  </mat-form-field>
+  <mat-form-field style='width: 100%'>
+    <mat-select placeholder="Tema" [(ngModel)]="temaSelectId">
+      <mat-option *ngFor="let tema of temasArray" [value]="tema.idTema">
+        {{tema.nombre}} - {{tema.materia.nombre}} - {{tema.materia.curso.nombre}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field style='width: 100%'>
+    <mat-select placeholder="Tipo actividad" [(ngModel)]="tipoActividadSelectId">
+      <mat-option *ngFor="let tipoActividad of tiposActividadesArray" [value]="tipoActividad.idTipoActividad">
+        {{tipoActividad.nombre}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field style='width: 100%'>
+    <input matInput placeholder="Url Principal" [(ngModel)]="urlPrin">
+  </mat-form-field>
+  <mat-form-field style='width: 100%'>
+    <input matInput placeholder="Url Alternativa" [(ngModel)]="urlSecu">
+  </mat-form-field>
+  <mat-form-field style='width: 100%'>
+    <input matInput placeholder="Texto" [(ngModel)]="textoSend">
+  </mat-form-field>
+  <button (click)="clickButton()"
+    mat-raised-button color="primary">
+    <i class="fas fa-save"></i> Guardar
+  </button>
+</div>

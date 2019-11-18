@@ -49,6 +49,7 @@ import { AcademicManagementComponent } from './_components/pages/academicManagem
 import { CrudMateriasComponent } from './_components/pages/academicManagement/dialog/crudMaterias/crudMaterias.component';
 import { CrudCursosComponent } from './_components/pages/academicManagement/dialog/crudCursos/crudCursos.component';
 import { CrudTemasComponent } from './_components/pages/academicManagement/dialog/crudTemas/crudTemas.component';
+import { CrudActividadesComponent } from './_components/pages/academicManagement/dialog/crudActividades/crudActividades.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { CrudTemasComponent } from './_components/pages/academicManagement/dialo
     CrudMateriasComponent,
     CrudCursosComponent,
     AcademicManagementComponent,
-    CrudTemasComponent
+    CrudTemasComponent,
+    CrudActividadesComponent
   ],
   entryComponents: [
     SnackBarComponent,
@@ -81,7 +83,8 @@ import { CrudTemasComponent } from './_components/pages/academicManagement/dialo
     AddAlumnosComponent,
     CrudMateriasComponent,
     CrudCursosComponent,
-    CrudTemasComponent
+    CrudTemasComponent,
+    CrudActividadesComponent
   ],
   imports: [
   BrowserModule,

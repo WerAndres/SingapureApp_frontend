@@ -23,4 +23,12 @@ export class ActividadesService {
   public sendMsg(actividades: Actividades): Observable<GenericResponse> {
     return this.http.post<GenericResponse>(this.server + '/secured/v1/actividades/create', actividades);
   }
+
+  public update(data: Actividades): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(this.server + '/secured/v1/actividades/actualizar', data);
+  }
+
+  public create(data: Actividades): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(this.server + '/secured/v1/actividades/crear', data);
+  }
 }
