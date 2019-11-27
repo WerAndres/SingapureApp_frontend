@@ -6,6 +6,7 @@ import { SnackBarComponent } from '../../util/snack-bar-component/snack-bar.comp
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { SnackModel } from 'src/app/_models/SnackModel';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -14,7 +15,6 @@ import { SnackModel } from 'src/app/_models/SnackModel';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
   id: any;
   content: any;
   UserLogin: Usuarios = new Usuarios();
@@ -26,11 +26,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     public snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private titleService: Title
     ) { }
 
   ngOnInit() {
     this.authService.logout();
+    this.setTitle('Login - SingapureApp');
   }
   onSubmit() {
     this.isLoading = true;
@@ -48,5 +50,8 @@ export class LoginComponent implements OnInit {
         this.snack.icon = null;
         this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
       });
+  }
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
   }
 }

@@ -4,7 +4,9 @@
     <input matInput placeholder="Email del alumno" [(ngModel)]="emailStudent">
   </mat-form-field>
   <button (click)="addAlumno()"
-    mat-raised-button color="primary">
+    mat-raised-button color="primary"
+    aria-label="Agregar un alumno"
+    matTooltip="Agregar un alumno">
     <i class="fas fa-plus"></i> agregar
   </button>
 </div>

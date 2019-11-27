@@ -4,7 +4,9 @@
     <input matInput placeholder="Email del padre" [(ngModel)]="emailParents">
   </mat-form-field>
   <button (click)="addPadre()"
-    mat-raised-button color="primary">
+    mat-raised-button color="primary"
+    aria-label="Agregar padre"
+    matTooltip="Agregar padre">
     <i class="fas fa-plus"></i> agregar
   </button>
 </div>

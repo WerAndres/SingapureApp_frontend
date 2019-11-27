@@ -3,7 +3,7 @@ import { TiposActividades } from './TiposActividades';
 
 export class Actividades {
   idActividad: any;
-  tipoActividad: TiposActividades;
+  tiposActividades: TiposActividades;
   tema: Temas;
   fechaCreacion: any;
   fechaActualizacion: any;

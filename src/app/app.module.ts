@@ -31,6 +31,7 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
+  MatTooltipModule,
   MatDialogModule
 } from '@angular/material';
 import { SnackBarComponent } from './_components/util/snack-bar-component/snack-bar.component';
@@ -109,6 +110,7 @@ import { CrudActividadesComponent } from './_components/pages/academicManagement
     MatExpansionModule,
     MatDialogModule,
     HttpClientModule,
+    MatTooltipModule,
     NgbModule,
     PdfViewerModule,
     JwtModule.forRoot({

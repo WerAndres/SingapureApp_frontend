@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material';
 import { Temas } from 'src/app/_models/Temas';
 import { InteraccionesService } from 'src/app/_services/utils/interacciones.service';
 import { Interacciones } from 'src/app/_models/Interacciones';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-forum',
@@ -41,10 +42,12 @@ export class ForumComponent implements OnInit {
     private router: Router,
     private temasService: TemasService,
     private interaccionesService: InteraccionesService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
+    this.setTitle('Foro - SingapureApp');
     this.ram = this.getRandomArbitrary(1, 9);
     this.userLE = JSON.parse(localStorage.getItem('user'));
     this.imageEnc = (this.userLE !== null && typeof this.userLE !== 'undefined') ?
@@ -208,5 +211,8 @@ export class ForumComponent implements OnInit {
     if (this.itemActiveMsg !== null && typeof this.itemActiveMsg !== 'undefined') {
       this.clickItemChannel(this.itemActiveMsg);
     }
+  }
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
   }
 }

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Usuarios } from './_models/Usuarios';
 
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -30,7 +31,11 @@ export class AppComponent implements OnInit {
     {name: 'Recursos didácticos', active: false, icon: 'fas fa-bolt', route: '/resources', roles: ['Padre', 'Alumno', 'Profesor']},
     {name: 'Salir', active: false, icon: 'fas fa-sign-out-alt', route: '/login', roles: ['Padre', 'Alumno', 'Profesor']},
   ];
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    @Inject(DOCUMENT) private document: Document
+    ) {
     router.events.subscribe((val) => {
       this.init();
   });
@@ -42,6 +47,7 @@ export class AppComponent implements OnInit {
   }
   ngOnInit() {
     this.init();
+    this.document.documentElement.lang = 'es';
   }
   init() {
     this.ram = this.getRandomArbitrary(1, 9);
@@ -49,7 +55,8 @@ export class AppComponent implements OnInit {
     this.userLE = JSON.parse(localStorage.getItem('user'))
     this.name = this.userLE !== null ? this.userLE.nombre : 'Usuario';
     this.rolPerson = this.userLE !== null ? this.userLE.tipoUsuario.nombre : 'rol';
-    this.imageEnc = this.userLE !== null && typeof this.userLE !== 'undefined' ? ((this.userLE.photo === null || typeof this.userLE.photo === 'undefined') ? '' : this.userLE.photo) : '';
+    this.imageEnc = this.userLE !== null && typeof this.userLE !== 'undefined' ? ((this.userLE.photo === null ||
+      typeof this.userLE.photo === 'undefined') ?'' : this.userLE.photo) : '';
   }
   activeChangedUrl() {
     const arrayPath = window.location.href.split('/');
@@ -93,7 +100,12 @@ export class AppComponent implements OnInit {
     }
   }
   roleActiveMenu(arrayRole: any){
-    return arrayRole.includes(this.userLE.tipoUsuario.nombre);
+    if (this.userLE) {
+      if (this.userLE.tipoUsuario) {
+        return arrayRole.includes(this.userLE.tipoUsuario.nombre);
+      }
+    }
+    return '';
   }
 }
 

@@ -8,13 +8,13 @@ import { TiposUsuarios } from '../../../_models/TiposUsuarios';
 import { MatTableDataSource } from '@angular/material/table';
 import { UsuariosMateriasService } from 'src/app/_services/utils/usuariosMaterias.service';
 import { MatDialog } from '@angular/material/dialog';
-import { MateriasData, PadresData, AlumnosData } from '../../util/interfaces/util-interfaces';
 import { DialogComponent } from '../../util/dialog/dialog.component';
 import { AddMateriasComponent } from './dialog/addMaterias/add-materias.component';
 import { PadresAlumnosService } from 'src/app/_services/utils/padresAlumnos.service';
 import { AddPadresComponent } from './dialog/addPadres/add-padres.component';
 import { AddAlumnosComponent } from './dialog/addAlumnos/add-alumnos.component';
 import { TableComponent } from '../../util/table-component/table.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -58,9 +58,11 @@ export class ProfileComponent implements OnInit {
     private usuariosMateriasService: UsuariosMateriasService,
     private padresAlumnosService: PadresAlumnosService,
     public snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private titleService: Title
   ) {}
   ngOnInit() {
+    this.setTitle('Perfil - SingapureApp');
     this.userLE = JSON.parse(localStorage.getItem('user'));
     this.ram = this.getRandomArbitrary(1, 9);
     this.usuarioSendImage.email = this.userLE !== null ? this.userLE.email : null;
@@ -379,5 +381,8 @@ export class ProfileComponent implements OnInit {
         this.snack.icon = null;
         this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
     });
+  }
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
   }
 }

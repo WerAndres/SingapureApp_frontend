@@ -8,7 +8,7 @@
       <form name="formLogin" (ngSubmit)="formLogin.form.valid && onSubmit()" #formLogin="ngForm" novalidate>
         <div>
             <mat-form-field>
-                <input type="email" matInput placeholder="Email" name="emailLogin" [(ngModel)]="UserLogin.email" #emailLogin="ngModel" [ngClass]="{ 'is-invalid': formLogin.submitted && emailLogin.invalid }" required email >
+                <input matTooltip="Ingrese su correo electronico registrado" type="email" matInput placeholder="Email" name="emailLogin" [(ngModel)]="UserLogin.email" #emailLogin="ngModel" [ngClass]="{ 'is-invalid': formLogin.submitted && emailLogin.invalid }" required email >
                 <mat-error *ngIf="emailLogin.hasError('email') && !emailLogin.hasError('required')">
                     Por favor ingrese un Email valido
                 </mat-error>
@@ -33,12 +33,16 @@
                         passwordLogin.hasError('required') ||
                         emailLogin.hasError('email') ||
                         emailLogin.hasError('required')"
-                    mat-raised-button color="primary">
-                        Acceder
+                    mat-raised-button color="primary"
+                    aria-label="Acceder a la plataforma"
+                    matTooltip="Acceder a la plataforma">
+                    <i class="fas fa-sign-in-alt"></i> Acceder
                 </button>
             </div>
             <div class="left">
-                <button type="button" routerLink="/register" mat-raised-button color="accent">Registrarse</button>
+                <button type="button" routerLink="/register" mat-raised-button color="accent" aria-label="Registrarse en la plataforma" matTooltip="Registrarse en la plataforma">
+                  <i class="fas fa-user-plus"></i> Registrarse
+                </button>
             </div>
         </div>
       </form>
