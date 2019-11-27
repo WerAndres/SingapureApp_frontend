@@ -19,7 +19,8 @@
             <td mat-cell *matCellDef="let row">
               <ng-container *ngFor="let action of row[item.value]">
                 <div class="buttonsProfileInfo buttonsProfileContainer buttonTextAwesome">
-                  <div class="buttonSmall {{action.colorClass}}" (click)="clickAction(row, action.click)">
+                  <div class="buttonSmall {{action.colorClass}}" (click)="clickAction(row, action.click)"
+                  matTooltip="{{action.name}} item">
                     <i class="{{action.icon}}"></i> {{action.name}}
                   </div>
                 </div>
@@ -38,6 +39,8 @@
 </div>
 
 <button *ngIf="generalConfig['activeAddItem']" (click)="clickAction(null, 'add')" style="float: right; margin: 20px;"
-  mat-raised-button color="primary">
+  mat-raised-button color="primary"
+  aria-label="Agregar item"
+  matTooltip="Agregar item">
   <i class="fas fa-plus"></i> {{generalConfig['titleAdd']}}
 </button>

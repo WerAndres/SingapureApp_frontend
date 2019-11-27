@@ -6,7 +6,7 @@
       <mat-drawer class="menuBarForum" #drawer [mode]="this.screenWidth > 800 ? 'side' : 'push'" style="border-radius: 10px 0px 0px 0px; max-width: 300px;">
         <div class="listaMaterias">
           <mat-card class="menuBarOp" style="border-radius: 0px; overflow: auto;">
-            <div class="titleListaMaterias" (click)="toProfile()">
+            <div class="titleListaMaterias" (click)="toProfile()" matTooltip="Foto de perfil">
               <div class="photoUser">
                   <div class="centrar profileImgSmall">
                       <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circleSmall" alt="Avatar">
@@ -14,7 +14,7 @@
                       <img *ngIf="imageEnc !== ''" style="display: none" [src]="this.imageEnc" (load)="onImageLoad($event)" />
                   </div>
               </div>
-              <div class="textTitleListaMaterias">
+              <div class="textTitleListaMaterias" matTooltip="Nombre de usuario">
                   {{userLE.nombre}}
               </div>
               <div class="iconTitleListaMaterias">
@@ -30,7 +30,7 @@
               <div *ngIf="listMatDef.length > 0">
                 <mat-accordion>
                   <ng-container *ngFor="let item of listMatDef">
-                    <mat-expansion-panel class="expandForo">
+                    <mat-expansion-panel class="expandForo" matTooltip="Abrir item">
                       <mat-expansion-panel-header>
                         <mat-panel-title class="itemListaMaterias">
                             <div class="expandForoTextItem">
@@ -56,7 +56,7 @@
                             <div class="textItem">
                                 {{ele.nombre}}
                             </div>
-                            <div class="iconItem">
+                            <div class="iconItem" matTooltip="Abrir item">
                                 <p>Abrir</p> <i class="fas fa-arrow-circle-right"></i>
                             </div>
                           </div>
@@ -73,7 +73,7 @@
       <mat-drawer-content>
         <div class="menuTop">
           <div [ngClass]="drawer.opened ? 'bordert upForoContainer' : 'borderc upForoContainer'">
-            <div id='toogleMenu' class="containIcon toogleChannel" (click)="drawer.toggle()">
+            <div id='toogleMenu' class="containIcon toogleChannel" (click)="drawer.toggle()" matTooltip="Despleagr menú de temas">
               <div class="iconToogleChannel">
                 <i *ngIf="drawer.opened" class="fas fa-arrow-left"></i>
                 <i class="fas fa-bars"></i>
@@ -81,7 +81,7 @@
               </div>
               <div class="titleToogleChannel">{{'Clases'}}</div>
             </div>
-            <div class="titleChannel centrar">
+            <div class="titleChannel centrar" matTooltip="Título del canal">
               <div class="contTitleChannel">
                 <div class="textTitleChannel">
                   <div [class]="activeInput ? 'parpadea okTitleChannel green' : 'parpadea okTitleChannel red' "></div> {{titleChannel}}
@@ -89,7 +89,7 @@
               </div>
             </div>
             <div class="optionsChannel">
-              <div class="iconRef" (click)="clickUpdate()">
+              <div class="iconRef" (click)="clickUpdate()" matTooltip="Actualizar conversación">
                 <i class="fas fa-sync"></i> Actualizar
               </div>
             </div>
@@ -98,17 +98,17 @@
         <div class="downForoContainer">
           <div class="upPrincipal">
             <div class="contUpPrincipal">
-              <app-loading class="centrar" *ngIf="isLoadingMsg"></app-loading>
-              <div *ngIf="listMsgDef.length === 0 && !isLoadingMsg" class="centrar" style="padding: 50px">
+              <app-loading class="centrar" *ngIf="isLoadingMesg"></app-loading>
+              <div *ngIf="listMsgDef.length === 0 && !isLoadingMesg" class="centrar" style="padding: 50px">
                 No existen interacciones
               </div>
-              <ng-container *ngIf="listMsgDef.length > 0 && !isLoadingMsg">
+              <ng-container *ngIf="listMsgDef.length > 0 && !isLoadingMesg">
                 <ng-container *ngFor="let item of listMsgDef">
                   <div class="contItemMsg">
                     <div [class]="item.prop ? 'contItemMsgWidth contItemMsgProp' : 'contItemMsgWidth contItemMsgOther'">
                       <div class="contItemMsgLeft">
                         <div class="photoMsg">
-                            <div class="centrar profileImgSmall">
+                            <div class="centrar profileImgSmall" matTooltip="Foto de perfil">
                                 <img *ngIf="item.urlUser === ''" src="../../../assets/images/profile{{ram}}.png" class="circleSmall" alt="Avatar">
                                 <div id="imageProfile" *ngIf="item.urlUser !== ''" [ngStyle]="{'background': 'url(' + item.urlUser + ')', 'background-size': heigthImg > widthImg ? '100% auto' : 'auto 100%'}" class="circleSmall"></div>
                                 <img *ngIf="item.urlUser !== ''" style="display: none" [src]="item.urlUser" (load)="onImageLoad($event)" />
@@ -132,13 +132,15 @@
           <div class="sendMessage">
             <div [class]="activeInput ? 'containerSendMessage' : 'containerSendMessage disableInput'">
               <div [class]="drawer.opened ? 'inputMessage inputMessageOpen' : 'inputMessage inputMessageClose'">
-                <mat-form-field class="inputMessageForm">
+                <mat-form-field class="inputMessageForm" matTooltip="Texto del mensaje">
                   <input matInput placeholder="Mensaje" [(ngModel)]="messageInput" [disabled]="activeInput ? null : ''">
                 </mat-form-field>
               </div>
               <div class="buttonMessage">
                 <button *ngIf="!actPhoto" (click)="clickAddMsg()"
-                  mat-raised-button color="primary">
+                  mat-raised-button color="primary"
+                  aria-label="Enviar mensaje"
+                  matTooltip="Enviar mensaje">
                   <i class="far fa-paper-plane"></i> Enviar
                 </button>
               </div>

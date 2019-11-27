@@ -3,12 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth/auth.service';
 import { TiposUsuariosService } from 'src/app/_services/utils/tiposUsuarios.service';
 import { Usuarios } from 'src/app/_models/Usuarios';
-import { ErrorGeneral } from '../../../_models/Error';
 import { Md5 } from 'md5-typescript';
 import { SnackBarComponent } from '../../util/snack-bar-component/snack-bar.component';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { SnackModel } from 'src/app/_models/SnackModel';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -33,9 +33,11 @@ export class RegisterComponent implements OnInit {
     private tiposUsuariosService: TiposUsuariosService,
     public snackBar: MatSnackBar,
     private router: Router,
+    private titleService: Title
     ) { }
 
   ngOnInit() {
+    this.setTitle('Registro - SingapureApp');
     this.tiposUsuariosService.getAll().subscribe(
       resp => {
         this.tiposUsuariosSelect = resp.bussinesData;
@@ -88,5 +90,7 @@ export class RegisterComponent implements OnInit {
         this.isLoading = false;
       });
   }
-
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
+  }
 }

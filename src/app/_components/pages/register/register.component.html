@@ -6,7 +6,7 @@
     </div>
     <div class="content-box-login" *ngIf="!isLoading">
       <form name="formRegister" (ngSubmit)="formRegister.form.valid && onSubmit()" #formRegister="ngForm" novalidate>
-        <div>
+        <div>          
           <mat-form-field>
             <input type="text" matInput placeholder="Nombre" name="nameRegister" [(ngModel)]="userRegister.nombre" #nameRegister="ngModel" [ngClass]="{ 'is-invalid': formRegister.submitted && nameRegister.invalid }" required >
             <mat-error *ngIf="nameRegister.hasError('required')">
@@ -50,6 +50,9 @@
           <span class="matErrorSim" *ngIf="confirmPassErrorEquals">
             Los campos "Password" y "confirmar password" Son diferentes
           </span>
+          <div style="font-size: 9px; color: red; text-align: left; margin: -10px 10px 10px 10px;">
+            Los campos que contienen un asterisco (*) son de caracter obligatorio
+          </div>
         </div>
         <div class="divButton inlineblock centrar">
             <div class="left">
@@ -58,12 +61,17 @@
                         passwordRegister.hasError('required') ||
                         emailRegister.hasError('email') ||
                         emailRegister.hasError('required')"
-                    mat-raised-button color="primary">
-                        Registrarse
+                    mat-raised-button color="primary"
+                    aria-label="Registrarse en la plataforma"
+                    matTooltip="Registrarse en la plataforma">
+                    <i class="fas fa-user-plus"></i> Registrarse
                 </button>
             </div>
             <div class="left">
-                <button routerLink="/login" mat-raised-button color="accent">Cancelar</button>
+                <button routerLink="/login" mat-raised-button color="accent" aria-label="Cancelar registro en la plataforma"
+                matTooltip="Cancelar registro en la plataforma">
+                  <i class="fas fa-window-close"></i> Cancelar
+                </button>
             </div>
         </div>
       </form>

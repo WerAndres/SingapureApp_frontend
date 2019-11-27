@@ -27,7 +27,9 @@
     <input matInput placeholder="Texto" [(ngModel)]="textoSend">
   </mat-form-field>
   <button (click)="clickButton()"
-    mat-raised-button color="primary">
+    mat-raised-button color="primary"
+    matTooltip="Guardar la actividad"
+    aria-label="Guardar la actividad">
     <i class="fas fa-save"></i> Guardar
   </button>
 </div>

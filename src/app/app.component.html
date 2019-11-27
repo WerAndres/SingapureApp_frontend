@@ -2,13 +2,13 @@
 <mat-drawer-container class="app-container">
   <mat-drawer class="menuBar" #drawer mode="push">
       <mat-card class="menuBarOp" >
-        <div class="iconBarMenuTop centrar" (click)="routeDashBoard()">
+        <div class="iconBarMenuTop centrar" (click)="routeDashBoard()" style="cursor: pointer;" matTooltip="ir a perfil">
           <div class="iconBarMenuTop_container">
             <div>SingapureApp</div>
             <img src="../../../assets/images/logo.png"/>
           </div>
         </div>
-        <div align="center" style="margin-top: 10px">
+        <div align="center" style="margin-top: 10px" matTooltip="Foto de perfil">
             <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circle" alt="Avatar">
             <div id="imageProfile" *ngIf="imageEnc !== ''" [ngStyle]="{'background': 'url(' + imageEnc + ')', 'background-size': heigthImg > widthImg ? '100% auto' : 'auto 100%'}" class="circle"></div>
             <img *ngIf="imageEnc !== ''" style="display: none" [src]="this.imageEnc" (load)="onImageLoad($event)" />
@@ -31,11 +31,11 @@
   </mat-drawer>
   <mat-drawer-content>
     <div class="menuTop" *ngIf="menuBar">
-      <div id='toogleMenu' class="containIcon" (click)="drawer.toggle()">
+      <div id='toogleMenu' class="containIcon" (click)="drawer.toggle()"  matTooltip="Abrir menu">
         <i [ngClass]="'fas fa-bars'"></i>
         <div>Menu</div>
       </div>
-      <div class="iconMenuTop" (click)="routeDashBoard()">
+      <div class="iconMenuTop" (click)="routeDashBoard()" matTooltip="Logo SingapureApp">
         <div>SingapureApp</div>
         <img src="../../../assets/images/logo.png"/>
       </div>

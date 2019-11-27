@@ -6,11 +6,11 @@ import { SnackModel } from 'src/app/_models/SnackModel';
 import { SnackBarComponent } from '../../util/snack-bar-component/snack-bar.component';
 import { MatSnackBar } from '@angular/material';
 import { Temas } from 'src/app/_models/Temas';
-import { InteraccionesService } from 'src/app/_services/utils/interacciones.service';
 import { Interacciones } from 'src/app/_models/Interacciones';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActividadesService } from 'src/app/_services/utils/actividades.service';
 import { Activities } from '../../util/interfaces/util-interfaces';
+import { Title } from '@angular/platform-browser';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -61,10 +61,12 @@ export class ResourcesComponent implements OnInit {
     private actividadesService: ActividadesService,
     // tslint:disable-next-line:variable-name
     private _sanitizer: DomSanitizer,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
+    this.setTitle('Recursos didácticos - SingapureApp');
     this.ram = this.getRandomArbitrary(1, 9);
     this.userLE = JSON.parse(localStorage.getItem('user'));
     this.imageEnc = (this.userLE !== null && typeof this.userLE !== 'undefined') ?
@@ -221,5 +223,8 @@ export class ResourcesComponent implements OnInit {
     this.urlPrin = this.listAct[item].urlPrincipal;
     this.urlAlt = this.listAct[item].urlAlternativa;
     this.textRep = this.listAct[item].texto;
+  }
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
   }
 }
