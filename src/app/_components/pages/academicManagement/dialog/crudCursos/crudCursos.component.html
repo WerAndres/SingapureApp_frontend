@@ -4,7 +4,9 @@
     <input matInput placeholder="Nombre de curso" [(ngModel)]="nombreCurso">
   </mat-form-field>
   <button (click)="clickButton()"
-    mat-raised-button color="primary">
+    mat-raised-button color="primary"
+    matTooltip="Guardar el curso"
+    aria-label="Guardar el curso">
     <i class="fas fa-save"></i> Guardar
   </button>
 </div>

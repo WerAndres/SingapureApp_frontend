@@ -8,8 +8,9 @@ import { MatSnackBar } from '@angular/material';
 import { TemasService } from 'src/app/_services/utils/temas.service';
 import { Actividades } from 'src/app/_models/Actividades';
 import { ActividadesService } from 'src/app/_services/utils/actividades.service';
-import { Temas } from 'src/app/_models/Temas';
 import { TiposActividadesService } from 'src/app/_services/utils/tiposActividades.service';
+import { Temas } from 'src/app/_models/Temas';
+import { TiposActividades } from 'src/app/_models/TiposActividades';
 
 
 @Component({
@@ -50,42 +51,68 @@ export class CrudActividadesComponent implements OnInit {
     if (this.typeCrud === 'update') {
       // tslint:disable-next-line: no-string-literal
       this.nombreActividad = this.data['item'].actividad;
+      // tslint:disable-next-line: no-string-literal
       this.urlPrin = this.data['item'].urlPrin;
+      // tslint:disable-next-line: no-string-literal
       this.urlSecu = this.data['item'].urlSecu;
-      this.textoSend = this.data['item'].texto;
+      // tslint:disable-next-line: no-string-literal
+      this.textoSend = this.data['item'].textoSend;
     }
   }
   updateActividad() {
-    /*this.isLoading = true;
+    this.isLoading = true;
     this.actividadSend = new Actividades();
     // tslint:disable-next-line: no-string-literal
     this.actividadSend.idActividad = this.data['item'].id;
     this.actividadSend.tema = new Temas();
-    // tslint:disable-next-line: no-string-literal
     this.actividadSend.tema.idTema = this.temaSelectId;
-    // tslint:disable-next-line: no-string-literal
     this.actividadSend.nombre = this.nombreActividad;
-    if (this.actividadSend.nombre !== '') {
+    this.actividadSend.tiposActividades = new TiposActividades();
+    this.actividadSend.tiposActividades.idTipoActividad = this.tipoActividadSelectId;
+    this.actividadSend.urlPrincipal = this.urlPrin;
+    this.actividadSend.urlAlternativa = this.urlSecu;
+    this.actividadSend.texto = this.textoSend;
+    if (this.actividadSend.nombre !== '' ) {
       if (this.temaSelectId !== null && typeof this.temaSelectId !== 'undefined' && this.temaSelectId !== '') {
-        this.actividadesServices.update(this.actividadSend).subscribe(
-          resp => {
+        if (this.tipoActividadSelectId !== null && typeof this.tipoActividadSelectId !== 'undefined' && this.tipoActividadSelectId !== '') {
+          if (this.actividadSend.urlPrincipal !== '') {
+            this.actividadesServices.update(this.actividadSend).subscribe(
+              resp => {
+                this.isLoading = false;
+                this.snack.elements = {};
+                this.snack.elements.title = 'Actualizar actividad';
+                this.snack.elements.message = 'Exitoso';
+                this.snack.type = 'ok';
+                this.snack.icon = null;
+                this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+              },
+              error => {
+                this.isLoading = false;
+                this.snack.elements = error;
+                this.snack.elements.title = null;
+                this.snack.elements.message = null;
+                this.snack.type = 'error';
+                this.snack.icon = null;
+                this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+            });
+          } else {
             this.isLoading = false;
             this.snack.elements = {};
-            this.snack.elements.title = 'Actulizar actividad';
-            this.snack.elements.message = 'Exitoso';
-            this.snack.type = 'ok';
-            this.snack.icon = null;
-            this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
-          },
-          error => {
-            this.isLoading = false;
-            this.snack.elements = error;
-            this.snack.elements.title = null;
-            this.snack.elements.message = null;
+            this.snack.elements.title = 'Error - validación';
+            this.snack.elements.message = 'El campo URLPrincipal esta vacío';
             this.snack.type = 'error';
             this.snack.icon = null;
             this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
-        });
+          }
+        } else {
+          this.isLoading = false;
+          this.snack.elements = {};
+          this.snack.elements.title = 'Error - validación';
+          this.snack.elements.message = 'El campo Tipo de actividad esta vacío';
+          this.snack.type = 'error';
+          this.snack.icon = null;
+          this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+        }
       } else {
         this.isLoading = false;
         this.snack.elements = {};
@@ -103,43 +130,67 @@ export class CrudActividadesComponent implements OnInit {
       this.snack.type = 'error';
       this.snack.icon = null;
       this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
-    }*/
+    }
   }
   createActividad() {
-    /*this.isLoading = true;
+    this.isLoading = true;
     this.actividadSend = new Actividades();
-    if (this.typeCrud === 'update') {
-      // tslint:disable-next-line: no-string-literal
-      this.actividadSend.idActividad = this.data['item'].id;
-    }
     this.actividadSend.tema = new Temas();
-    // tslint:disable-next-line: no-string-literal
     this.actividadSend.tema.idTema = this.temaSelectId;
-    // tslint:disable-next-line: no-string-literal
     this.actividadSend.nombre = this.nombreActividad;
-    if (this.actividadSend.nombre !== '') {
+    this.actividadSend.tiposActividades = new TiposActividades();
+    this.actividadSend.tiposActividades.idTipoActividad = this.tipoActividadSelectId;
+    this.actividadSend.urlPrincipal = this.urlPrin;
+    this.actividadSend.urlAlternativa = this.urlSecu;
+    this.actividadSend.texto = this.textoSend;
+    if (this.actividadSend.nombre !== '' ) {
       if (this.temaSelectId !== null && typeof this.temaSelectId !== 'undefined' && this.temaSelectId !== '') {
-        this.actividadesServices.create(this.actividadSend).subscribe(
-          resp => {
+        if (this.tipoActividadSelectId !== null && typeof this.tipoActividadSelectId !== 'undefined' && this.tipoActividadSelectId !== '') {
+          if (this.actividadSend.urlPrincipal !== '') {
+            this.actividadesServices.create(this.actividadSend).subscribe(
+              resp => {
+                this.isLoading = false;
+                this.snack.elements = {};
+                this.nombreActividad = '';
+                this.temaSelectId = '';
+                this.tipoActividadSelectId = '';
+                this.urlPrin = '';
+                this.urlSecu = '';
+                this.textoSend = '';
+                this.snack.elements.title = 'Crear actividad';
+                this.snack.elements.message = 'Exitoso';
+                this.snack.type = 'ok';
+                this.snack.icon = null;
+                this.temaSelectId = '';
+                this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+              },
+              error => {
+                this.isLoading = false;
+                this.snack.elements = error;
+                this.snack.elements.title = null;
+                this.snack.elements.message = null;
+                this.snack.type = 'error';
+                this.snack.icon = null;
+                this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+            });
+          } else {
             this.isLoading = false;
             this.snack.elements = {};
-            this.nombreActividad = '';
-            this.snack.elements.title = 'Crear actividad';
-            this.snack.elements.message = 'Exitoso';
-            this.snack.type = 'ok';
-            this.snack.icon = null;
-            this.temaSelectId = '';
-            this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
-          },
-          error => {
-            this.isLoading = false;
-            this.snack.elements = error;
-            this.snack.elements.title = null;
-            this.snack.elements.message = null;
+            this.snack.elements.title = 'Error - validación';
+            this.snack.elements.message = 'El campo URLPrincipal esta vacío';
             this.snack.type = 'error';
             this.snack.icon = null;
             this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
-        });
+          }
+        } else {
+          this.isLoading = false;
+          this.snack.elements = {};
+          this.snack.elements.title = 'Error - validación';
+          this.snack.elements.message = 'El campo Tipo de actividad esta vacío';
+          this.snack.type = 'error';
+          this.snack.icon = null;
+          this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
+        }
       } else {
         this.isLoading = false;
         this.snack.elements = {};
@@ -157,7 +208,7 @@ export class CrudActividadesComponent implements OnInit {
       this.snack.type = 'error';
       this.snack.icon = null;
       this.snackBar.openFromComponent(SnackBarComponent, {data: this.snack});
-    }*/
+    }
   }
   clickButton() {
     if (this.typeCrud === 'create') {

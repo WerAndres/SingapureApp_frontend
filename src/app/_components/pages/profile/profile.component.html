@@ -1,23 +1,29 @@
 <div class="containerPage row">
   <div class="titlePage">Perfil de usuario {{this.usuarioSend.tipoUsuario.nombre}}</div>
   <div class="profilePhoto col-md-4" *ngIf="!isLoading">
-    <div [class]="actPhoto ? 'profileImg centrar greyUpdate' : 'centrar profileImg'">
+    <div [class]="actPhoto ? 'profileImg centrar greyUpdate' : 'centrar profileImg'" matTooltip="Foto de perfil">
         <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circle" alt="Avatar">
         <div id="imageProfile" *ngIf="imageEnc !== ''" [ngStyle]="{'background': 'url(' + imageEnc + ')', 'background-size': heigthImg > widthImg ? '100% auto' : 'auto 100%'}" class="circle"></div>
         <img *ngIf="imageEnc !== ''" style="display: none" [src]="this.imageEnc" (load)="onImageLoad($event)" />
     </div>
     <div class="profileButtons centrar">
       <button *ngIf="!actPhoto" (click)="actPhoto = true"
-        mat-raised-button color="primary">
+        mat-raised-button color="primary"
+        aria-label="Editar url de foto de perfil"
+        matTooltip="Editar url de foto de perfil">
         <i class="fas fa-edit"></i> Editar
       </button>
       <div class="containerProfileButtons" *ngIf="actPhoto">
           <button  (click)="actPhoto = false; actUser()" style="margin-top: 5px;"
-          mat-raised-button color="primary">
+          mat-raised-button color="primary"
+          aria-label="Guardar url de foto de perfil"
+          matTooltip="Guardar url de foto de perfil">
           <i class="fas fa-save"></i> Guardar
         </button>
         <button  (click)="actPhoto = false" style="margin-left: 5px; margin-top: 5px;"
-          mat-raised-button color="accent">
+          mat-raised-button color="accent"
+          aria-label="Cancelar modificar url de foto de perfil"
+          matTooltip="Cancelar modificar url de foto de perfil">
           <i class="fas fa-times"></i> Cancelar
         </button>
         <mat-form-field class="urlNewPhoto">
@@ -29,7 +35,7 @@
   <app-loading class="centrar" *ngIf="isLoading"></app-loading>
   <div  *ngIf="!isLoading" class="profileInfo col-md-8">
     <mat-accordion>
-      <mat-expansion-panel>
+      <mat-expansion-panel matTooltip="Abrir perfil de usuario">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <i class="fas fa-user"></i> Perfil usuario
@@ -51,18 +57,21 @@
                 <input matInput placeholder="{{itemProfile.nameInput}} nuevo" [(ngModel)]="itemProfile.value">
               </mat-form-field>
               <div class="buttonsProfileInfo buttonsProfileContainer buttonTextAwesome" style="margin-top: 15px" *ngIf="!itemProfile.activeEdit">
-                <div class="buttonSmall primary" (click)="clickActivated(itemProfile)">
+                <div class="buttonSmall primary" (click)="clickActivated(itemProfile)" aria-label="Editar item"
+                matTooltip="Editar item">
                   <i class="fas fa-edit"></i> Editar
                 </div>
               </div>
               <div style="margin-top: 15px" class="buttonsProfileContainer">
                 <div class="buttonsProfileInfo buttonTextAwesome" *ngIf="itemProfile.activeEdit">
-                  <div class="buttonSmall primary" (click)="saveUsuario(itemProfile)">
+                  <div class="buttonSmall primary" (click)="saveUsuario(itemProfile)" aria-label="Guardar item"
+                  matTooltip="Guardar item">
                     <i class="fas fa-save"></i> Guardar
                   </div>
                 </div>
                 <div class="buttonsProfileInfo buttonTextAwesome" *ngIf="itemProfile.activeEdit">
-                  <div class="buttonSmall accent" (click)="cancelActivated(itemProfile)">
+                  <div class="buttonSmall accent" (click)="cancelActivated(itemProfile)" aria-label="Cancelar modificar item"
+                  matTooltip="Cancelar modificar item">
                     <i class="fas fa-window-close"></i> Cancelar
                   </div>
                 </div>
@@ -71,7 +80,8 @@
           </div>
         </div>
       </mat-expansion-panel>
-      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Profesor' || this.usuarioSend.tipoUsuario.nombre === 'Alumno'">
+      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Profesor' || this.usuarioSend.tipoUsuario.nombre === 'Alumno'" 
+      matTooltip="Abrir materias asociadas">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <i class="fas fa-book-open"></i> Materias asociadas
@@ -82,7 +92,7 @@
         <app-table #tablaMaterias (onSuggest)="clickActionMat($event[0], $event[1])" [dataSource]="dataSourceMat"
             [isLoading]="isLoadingMat" [configColumns]="configColumnsMat" [generalConfig]="generalConfigMat"></app-table>
       </mat-expansion-panel>
-      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Alumno'">
+      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Alumno'"  matTooltip="Abrir padres asociados">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <i class="fas fa-street-view"></i> Padres asociados
@@ -93,7 +103,7 @@
         <app-table #tablaPadres (onSuggest)="clickActionPad($event[0], $event[1])" [dataSource]="dataSourcePad"
           [isLoading]="isLoadingPad" [configColumns]="configColumnsPad" [generalConfig]="generalConfigPad"></app-table>
       </mat-expansion-panel>
-      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Padre'">
+      <mat-expansion-panel *ngIf="this.usuarioSend.tipoUsuario.nombre === 'Padre'"  matTooltip="Abrir alumnos asociados">
         <mat-expansion-panel-header>
           <mat-panel-title>
               <i class="fas fa-user-graduate"></i> Alumnos asociados

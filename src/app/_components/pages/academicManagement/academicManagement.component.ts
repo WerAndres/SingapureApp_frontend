@@ -14,6 +14,7 @@ import { TemasService } from 'src/app/_services/utils/temas.service';
 import { CrudTemasComponent } from './dialog/crudTemas/crudTemas.component';
 import { ActividadesService } from 'src/app/_services/utils/actividades.service';
 import { CrudActividadesComponent } from './dialog/crudActividades/crudActividades.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-academic-management',
@@ -60,7 +61,8 @@ export class AcademicManagementComponent implements OnInit {
     private temasService: TemasService,
     private actividadesService: ActividadesService,
     public snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
@@ -73,7 +75,7 @@ export class AcademicManagementComponent implements OnInit {
       activeAddItem: true
     };
     this.getCursos();
-
+    this.setTitle('Gestión academica - SingapureApp');
     this.configColumnsMat = [
       { value: 'materia' , title: 'Materia', action: false},
       { value: 'curso' , title: 'Curso', action: false},
@@ -108,6 +110,9 @@ export class AcademicManagementComponent implements OnInit {
     };
     this.getActividades();
 
+  }
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
   }
   getCursos() {
     this.isLoadingCur = true;
