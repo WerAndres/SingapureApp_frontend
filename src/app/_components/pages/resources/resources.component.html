@@ -6,7 +6,7 @@
       <mat-drawer class="menuBarForum" #drawer [mode]="this.screenWidth > 800 ? 'side' : 'push'" style="border-radius: 10px 0px 0px 0px; max-width: 300px;">
         <div class="listaMaterias">
           <mat-card class="menuBarOp" style="border-radius: 0px; overflow: auto;">
-            <div class="titleListaMaterias" (click)="toProfile()" matTooltip="Foto de perfil">
+            <div class="titleListaMaterias" (click)="toProfile()">
               <div class="photoUser">
                   <div class="centrar profileImgSmall">
                       <img *ngIf="imageEnc === ''" src="../../../assets/images/profile{{ram}}.png" class="circleSmall" alt="Avatar">
@@ -14,7 +14,7 @@
                       <img *ngIf="imageEnc !== ''" style="display: none" [src]="this.imageEnc" (load)="onImageLoad($event)" />
                   </div>
               </div>
-              <div class="textTitleListaMaterias" matTooltip="Nombre de usuario">
+              <div class="textTitleListaMaterias">
                   {{userLE.nombre}}
               </div>
               <div class="iconTitleListaMaterias">
@@ -30,7 +30,7 @@
               <div *ngIf="listMatDef.length > 0">
                 <mat-accordion>
                   <ng-container *ngFor="let item of listMatDef">
-                    <mat-expansion-panel class="expandForo" matTooltip="Abrir item">
+                    <mat-expansion-panel class="expandForo">
                       <mat-expansion-panel-header>
                         <mat-panel-title class="itemListaMaterias">
                             <div class="expandForoTextItem">
@@ -56,7 +56,7 @@
                             <div class="textItem">
                                 {{ele.nombre}}
                             </div>
-                            <div class="iconItem" matTooltip="Abrir item">
+                            <div class="iconItem">
                                 <p>Abrir</p> <i class="fas fa-arrow-circle-right"></i>
                             </div>
                           </div>
@@ -73,7 +73,7 @@
       <mat-drawer-content>
         <div class="menuTop">
           <div [ngClass]="drawer.opened ? 'bordert upForoContainer' : 'borderc upForoContainer'">
-            <div id='toogleMenu' class="containIcon toogleChannel" (click)="drawer.toggle()" matTooltip="Despleagr menú de temas">
+            <div id='toogleMenu' class="containIcon toogleChannel" (click)="drawer.toggle()">
               <div class="iconToogleChannel">
                 <i *ngIf="drawer.opened" class="fas fa-arrow-left"></i>
                 <i class="fas fa-bars"></i>
@@ -82,14 +82,14 @@
               <div class="titleToogleChannel">{{'Clases'}}</div>
             </div>
             <div class="titleChannel centrar">
-              <div class="contTitleChannel" matTooltip="Nombre del tema">
+              <div class="contTitleChannel">
                 <div class="textTitleChannel">
                   {{titleClass}}
                 </div>
               </div>
             </div>
             <div class="optionsChannelResources">
-              <mat-form-field matTooltip="Seleccione una actividad">
+              <mat-form-field>
                 <mat-label>Actividad</mat-label>
                 <mat-select (selectionChange)="onChangeActivity($event.value)" [(ngModel)]="selectedActivity">
                   <mat-option *ngFor="let activity of activities" [value]="activity.idActividad">
@@ -107,7 +107,7 @@
             </div>
             <div *ngIf="activities.length > 0" class="areaResource centrar">
                 <div class="areaPdfRep" *ngIf="resourceActive == 'pdf'">
-                    <iframe [src]="getIframe(urlPrin)"></iframe>
+                    <iframe [src]="urlPrin | UrlPipe"></iframe>
                   </div>
               <div class="areaTextoRep" *ngIf="resourceActive == 'texto'">
                 <div [innerHTML]="textRep" class="readText">
@@ -116,7 +116,7 @@
               </div>
               <div class="areaAudioRep" *ngIf="resourceActive == 'audio'">
                 <div *ngIf="urlAlt !== ''">
-                  <iframe [src]="getIframe(urlAlt)"></iframe>
+                  <iframe [src]="urlAlt | UrlPipe"></iframe>
                 </div>
                 <div *ngIf="urlAlt === ''">
                   Seleccione un tema por favor
@@ -124,7 +124,7 @@
               </div>
               <div class="areaVideoRep" *ngIf="resourceActive == 'video'">
                 <div *ngIf="urlPrin !== ''">
-                  <iframe [src]="getIframe(urlPrin)"></iframe>
+                  <iframe [src]="urlPrin | UrlPipe"></iframe>
                 </div>
                 <div *ngIf="urlPrin === ''">
                   Seleccione un tema por favor
@@ -132,7 +132,7 @@
               </div>
               <div class="areaDinamicaRep" *ngIf="resourceActive == 'dinamica'">
                 <div *ngIf="urlPrin !== ''">
-                  <iframe [src]="getIframe(urlPrin)"></iframe>
+                  <iframe [src]="urlPrin | UrlPipe"></iframe>
                 </div>
                 <div *ngIf="urlPrin === ''">
                   Seleccione un tema por favor
@@ -144,33 +144,25 @@
             <div class="areaUx">
               <div class="areaVideo centrar" *ngIf="(resourceActive == 'texto' || resourceActive == 'audio') && resourceType == 'video'">
                   <button style="margin: auto;" (click)="viewPanwl('video')"
-                  mat-raised-button color="primary"
-                  aria-label="Ver video"
-                  matTooltip="Ver video">
+                  mat-raised-button color="primary">
                   <i class="fas fa-video"></i> Ver video
                 </button>
               </div>
               <div class="areaAudio centrar" *ngIf="resourceActive == 'texto' || resourceActive == 'pdf' || resourceActive == 'video'">
                 <button style="margin: auto;" (click)="viewPanwl('audio')"
-                  mat-raised-button color="primary"
-                  aria-label="Escuchar audio"
-                  matTooltip="Escuchar audio">
+                  mat-raised-button color="primary">
                   <i class="fas fa-headphones-alt"></i> Escuchar audio
                 </button>
               </div>
               <div class="areaTexto centrar" *ngIf="resourceActive == 'video' || resourceActive == 'pdf' || resourceActive == 'audio'">
                   <button style="margin: auto;" (click)="viewPanwl('texto')"
-                  mat-raised-button color="primary"
-                  aria-label="Leer texto"
-                  matTooltip="Lerr texto">
+                  mat-raised-button color="primary">
                   <i class="fas fa-book"></i> Leer texto
                 </button>
               </div>
               <div class="areaPdf centrar" *ngIf="(resourceActive == 'texto' || resourceActive == 'audio') && resourceType == 'pdf'">
                   <button style="margin: auto;" (click)="viewPanwl('pdf')"
-                  mat-raised-button color="primary"
-                  aria-label="Ver PDF"
-                  matTooltip="Ver PDF">
+                  mat-raised-button color="primary">
                   <i class="fas fa-file-pdf"></i> ver PDF
                 </button>
               </div>
