@@ -7,15 +7,15 @@ import { SnackBarComponent } from '../../util/snack-bar-component/snack-bar.comp
 import { MatSnackBar } from '@angular/material';
 import { Temas } from 'src/app/_models/Temas';
 import { Interacciones } from 'src/app/_models/Interacciones';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActividadesService } from 'src/app/_services/utils/actividades.service';
 import { Activities } from '../../util/interfaces/util-interfaces';
 import { Title } from '@angular/platform-browser';
 
-@Pipe({ name: 'safe' })
-export class SafePipe implements PipeTransform {
+@Pipe({ name: 'UrlPipe' })
+export class UrlPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) { }
-  transform(url) {
+  transform(url: any): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }
@@ -59,8 +59,7 @@ export class ResourcesComponent implements OnInit {
     private router: Router,
     private temasService: TemasService,
     private actividadesService: ActividadesService,
-    // tslint:disable-next-line:variable-name
-    private _sanitizer: DomSanitizer,
+    private sanitizer: DomSanitizer,
     public snackBar: MatSnackBar,
     private titleService: Title
   ) { }
@@ -199,16 +198,6 @@ export class ResourcesComponent implements OnInit {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-  getIframe(url: any) {
-    let video;
-    let results;
-    if (url === null) {
-        return '';
-    }
-    results = url.match('[\\?&]v=([^&#]*)');
-    video   = (results === null) ? url : results[1];
-    return this._sanitizer.bypassSecurityTrustResourceUrl(video);
-  }
   viewPanwl(opt: any) {
     this.resourceActive = opt;
   }

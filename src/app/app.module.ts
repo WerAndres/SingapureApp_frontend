@@ -1,5 +1,5 @@
 import { ProfileComponent } from './_components/pages/profile/profile.component';
-import { ResourcesComponent } from './_components/pages/resources/resources.component';
+import { ResourcesComponent, UrlPipe } from './_components/pages/resources/resources.component';
 import { ForumComponent } from './_components/pages/forum/forum.component';
 import { DashboardComponent } from './_components/pages/dashboard/dashboard.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -73,7 +73,8 @@ import { CrudActividadesComponent } from './_components/pages/academicManagement
     CrudCursosComponent,
     AcademicManagementComponent,
     CrudTemasComponent,
-    CrudActividadesComponent
+    CrudActividadesComponent,
+    UrlPipe
   ],
   entryComponents: [
     SnackBarComponent,
@@ -88,7 +89,7 @@ import { CrudActividadesComponent } from './_components/pages/academicManagement
     CrudActividadesComponent
   ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
     MatCardModule,
@@ -116,7 +117,9 @@ import { CrudActividadesComponent } from './_components/pages/academicManagement
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {
+          if (JSON.parse(localStorage.getItem('user'))) {
              return JSON.parse(localStorage.getItem('user')).token;
+          }
         },
         whitelistedDomains: ['localhost:4224'],
         blacklistedRoutes: ['http://localhost:4224/login']
@@ -128,7 +131,9 @@ import { CrudActividadesComponent } from './_components/pages/academicManagement
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 4000 } },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule {
   constructor(private meta: Meta) {
